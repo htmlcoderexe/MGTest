@@ -10,7 +10,7 @@ namespace GameObjects.Items
     public class ItemCard : Item
     {
 
-        public int[] SpecialCards = new int[] {1,24,12,26,7,15,23,31 };
+        public static int[] SpecialCards = new int[] {1,24,12,26,7,15,23,31 };
 
         public int Effect;
 
@@ -19,6 +19,8 @@ namespace GameObjects.Items
             this.Effect = Effect;
             this.Icon = Map.CardMappings[Effect]+32;
             this.Name = "Effect #" + Effect + ", Icon #" + this.Icon;
+            if (SpecialCards.Contains(this.Effect))
+                this.Identified = true;
         }
 
         public override bool Apply(Actor Target)

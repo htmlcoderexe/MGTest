@@ -11,6 +11,11 @@ namespace GUI
     {
         public List<Window> Windows;
 
+        public WindowManager()
+        {
+            this.Windows = new List<Window>();
+        }
+
         public void Render(SpriteBatch batch)
         {
             foreach(Window w in this.Windows)
