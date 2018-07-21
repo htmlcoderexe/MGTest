@@ -35,3 +35,9 @@
 /processorParam:DebugMode=Auto
 /build:File.fx
 
+#begin GUI.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:GUI.fx
+

@@ -11,11 +11,13 @@ namespace GameObjects.Items
     {
 
         public static int[] SpecialCards = new int[] {1,24,12,26,7,15,23,31 };
-
+        public static List<int> IdentifiedCards;
         public int Effect;
 
-        public ItemCard(int Effect)
+        public ItemCard(int Effect) 
         {
+            if (IdentifiedCards == null)
+                IdentifiedCards = ((int[])SpecialCards.Clone()).ToList();
             this.Effect = Effect;
             this.Icon = Map.CardMappings[Effect]+32;
             this.Name = "Effect #" + Effect + ", Icon #" + this.Icon;
@@ -26,7 +28,11 @@ namespace GameObjects.Items
         public override bool Apply(Actor Target)
         {
             Player.Message(this.GetDescription());
-            this.Identified = true;
+            if (!Identified)
+            {
+                this.Identified = true;
+                IdentifiedCards.Add(this.Effect);
+            }
             return true;
         }
 

@@ -161,6 +161,22 @@ namespace GameObjects
             return result;
         }
 
+        public static void PlaceCorridorTile(Map Map, int X, int Y)
+        {
+            GameObjects.Map.Tile floortile, walltile, sidetile, doortile, doortile2;
+            floortile = new Map.Tile();
+            floortile.Index = 7;
+            floortile.Passable = true;
+            walltile = new Map.Tile();
+            walltile.Index = 2;
+            walltile.Passable = false;
+            doortile = new Map.Tile();
+            doortile.Index = 4;
+            doortile.Passable = true;
+
+
+            Map.SetTile(new Point(X, Y), floortile);
+        }
        
         public Map ConnectRooms(Map Map, Rectangle A, Rectangle B)
         {
@@ -171,7 +187,98 @@ namespace GameObjects
             return Map;
         }
 
+        public static Map DrawCorridor(Map Map, Rectangle start, Rectangle end)
+        {
+           // int start_x_lowerbound = (int)Math.Min(start.X, end.X);
+
+            //determine start and end point
+
+            
+
+            return Map;
+        }
+
         public static Map DrawCorridor(Map Map, Point start, Point end)
+        {
+            GameObjects.Map.Tile floortile, walltile, sidetile, doortile, doortile2;
+            floortile = new Map.Tile();
+            floortile.Index = 7;
+            floortile.Passable = true;
+            walltile = new Map.Tile();
+            walltile.Index = 2;
+            walltile.Passable = false;
+            sidetile = new Map.Tile();
+            sidetile.Index = 2;
+            sidetile.Passable = false;
+            doortile = new Map.Tile();
+            doortile.Index = 4;
+            doortile.Passable = true;
+            doortile2 = new Map.Tile();
+            doortile2.Index = 5;
+            doortile2.Passable = true;
+            Random RNG = new Random();
+
+
+            Point CurrentPosition = start;
+            int Xstep = start.X < end.X ? 1 : -1;
+            int Ystep = start.Y < end.Y ? 1 : -1;
+
+            bool goingX = RNG.NextDouble() > 0.5;
+            bool noSwap = false;
+            bool leftRoom = false;
+            while(CurrentPosition!=end && CurrentPosition.X<Map.Width && CurrentPosition.Y<Map.Height)
+            {
+                if(goingX)
+                {
+                    if(CurrentPosition.X==end.X)
+                    {
+                        noSwap = true;
+
+                        goingX = !goingX;
+                    }
+                    else
+                    CurrentPosition.X += Xstep;
+                }
+                else
+                {
+                    if (CurrentPosition.Y == end.Y)
+                    {
+                        noSwap = true;
+
+                        goingX = !goingX;
+                    }
+                    else
+                        CurrentPosition.Y += Ystep;
+                }
+                if (!noSwap)
+                    if (RNG.NextDouble() > 0.8)
+                        goingX = !goingX;
+
+                if (CurrentPosition.X < 0 || CurrentPosition.X >= Map.Width || CurrentPosition.Y < 0 || CurrentPosition.Y >= Map.Width)
+                    return Map;
+                if (Map.Tiles[CurrentPosition.X, CurrentPosition.Y].Index == walltile.Index && leftRoom)
+                {
+                    Map.SetTile(CurrentPosition.X,CurrentPosition.Y, doortile);
+                    leftRoom = true;
+                    if(goingX)
+                    {
+                        CurrentPosition.X += Xstep;
+                    }
+                    else
+                    {
+                        CurrentPosition.Y += Ystep;
+                    }
+
+                }
+                    PlaceCorridorTile(Map, CurrentPosition.X, CurrentPosition.Y);
+                
+            }
+
+
+            return Map;
+        }
+
+        public static Map DrawCorridor2(Map Map, Point start, Point end)
         {
 
             GameObjects.Map.Tile floortile, walltile, sidetile, doortile, doortile2;
@@ -336,7 +443,7 @@ namespace GameObjects
             floortile.Index = 1;
             floortile.Passable = true;
             walltile = new Map.Tile();
-            walltile.Index = 3;
+            walltile.Index = 2;
             walltile.Passable = false;
             sidetile = new Map.Tile();
             sidetile.Index = 2;
@@ -356,7 +463,8 @@ namespace GameObjects
             foreach (Rectangle REKT in rekts)
             {
                 side = new Rectangle(REKT.X, REKT.Y - 1, REKT.Width, 1);
-                wall = new Rectangle(REKT.X - 1, REKT.Y - 2, REKT.Width + 2, REKT.Height + 3);
+                wall = new Rectangle(REKT.X - 1, REKT.Y - 1, REKT.Width + 2, REKT.Height + 2);
+                FillRect(Map, wall, walltile);
                 FillRect(Map, REKT, floortile);
              //   FillRect(Map, side, sidetile);
              //  DrawRect(Map, wall, walltile);
@@ -384,11 +492,13 @@ namespace GameObjects
             List<Vector3> edges = t.DoEdges(roomcenters);
             List<Vector3> tree = Generation.DisTreeItem.PruneEdges(edges, connectedness);
             
+
+            //Each e is in the form of {roomA,roomB,Distance}
             foreach(Vector3 e in tree)
             {
                 DrawCorridor(Map, roomcenters[(int)e.X], roomcenters[(int)e.Y]);
             }
-
+            /*/
             for (int x = 1; x < Map.Width; x++)
                 for (int y = 1; y < Map.Height; y++)
                 {
@@ -444,7 +554,7 @@ namespace GameObjects
                     }
 
                 }
-
+            //*/
             for (int i=0;i<40;i++)
             {
                 
@@ -473,6 +583,7 @@ namespace GameObjects
             Point spawn = p[0];
             Map.PlayerSpawn= spawn;
 
+            return Map;
 
             p = GameObjects.MapGeneratorMesh.PlaceOjects(0, 0, W, H, rekts, 6, spots, true);
             foreach(Point np in p)
@@ -497,7 +608,7 @@ namespace GameObjects
 
             Map.CardMappings = CreateMappings(Map.CardMappings,31);
 
-            p = PlaceOjects(0, 0, W, H, rekts, 7);
+            p = PlaceOjects(0, 0, W, H, rekts, 28,p,true);
             foreach (Point np in p)
             { 
                 ItemDrop c = new ItemDrop(new Items.ItemCard(RNG.Next(0,31)));

@@ -23,7 +23,7 @@ namespace Rog2D
             Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += new System.EventHandler<System.EventArgs>(Window_ClientSizeChanged);
-
+            IsMouseVisible = true;
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
@@ -46,8 +46,7 @@ namespace Rog2D
         /// </summary>
         protected override void Initialize()
         {
-            CurrentScene = new Scenes.MainGame();
-            CurrentScene.Init();
+            
 
             base.Initialize();
             
@@ -64,11 +63,11 @@ namespace Rog2D
         /// </summary>
         protected override void LoadContent()
         {
-
+            CurrentScene = new Scenes.MainGame();
             
 
             //World.Player.CanPhase = true;
-         //   GameObjects.MapGenerator.DrawRect(World.Map, 3, 5, 8, 8, floor);
+            //   GameObjects.MapGenerator.DrawRect(World.Map, 3, 5, 8, 8, floor);
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Player.MessageCallback = new System.Action<string>(SetText);
@@ -77,12 +76,20 @@ namespace Rog2D
             Assets.SpriteSheets["items1"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\items.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["GUI"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\GUI.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["test_bus"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\bus.png", System.IO.FileMode.Open));
-            GUI.Drawing.WindowSkin = Assets.SpriteSheets["GUI"];
+
+            GUI.Renderer r = new GUI.Renderer(GraphicsDevice);
+            r.WindowSkin = Assets.SpriteSheets["GUI"];
             Assets.Fonts["console"] = Content.Load<SpriteFont>("Play");
-            GUI.Drawing.DefaultFont = Assets.Fonts["console"];
-            Assets.Shaders["GUI"] = Content.Load<Effect>("File");
-            GUI.Drawing.Shader = Assets.Shaders["GUI"];
+            r.UIFont = Assets.Fonts["console"];
+            Assets.Shaders["GUI"] = Content.Load<Effect>("GUI");
+            r.GUIEffect = Assets.Shaders["GUI"];
             // TODO: use this.Content to load your game content here
+            
+            GUI.WindowManager WM = new GUI.WindowManager();
+            WM.Renderer = r;
+            (CurrentScene as Scenes.MainGame).WM = WM;
+            CurrentScene.Init();
+
         }
 
         /// <summary>

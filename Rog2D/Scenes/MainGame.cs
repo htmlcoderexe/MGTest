@@ -23,14 +23,24 @@ namespace Rog2D.Scenes
 
         private Player Player;
 
-        float Scale;
+        float Scale=1;
 
         int Scroll;
 
-        GUI.WindowManager WM;
+        public GUI.WindowManager WM;
+
+        public UI.ConsoleWindow Console;
 
         public void HandleInput(GameTime gameTime)
         {
+
+            while(Volatile.MessageLog.Count>0)
+            {
+                string msg = Volatile.MessageLog.Pop();
+                Console.AppendMessage(msg);
+            }
+
+
 
             MouseState m = Mouse.GetState();
             KeyboardState k = Keyboard.GetState();
@@ -58,6 +68,8 @@ namespace Rog2D.Scenes
 
             pks = k;
 
+
+                WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
         }
 
             if (m.ScrollWheelValue >Scroll)
@@ -76,7 +88,7 @@ namespace Rog2D.Scenes
             Map = new GameObjects.Map(20, 20);
             //GameObjects.MapGeneratorDigger Mapper = new GameObjects.MapGeneratorDigger(64, 64);
 
-            Map = GameObjects.MapGeneratorMesh.Generate(64, 64, 100, 5, 0.01f);
+            Map = GameObjects.MapGeneratorMesh.Generate(256, 256, 100, 5, 0.05f);
             //World.Map = Mapper.Generate(100);
             Player.X = Map.PlayerSpawn.X;
             Player.Y = Map.PlayerSpawn.Y;
@@ -105,8 +117,10 @@ namespace Rog2D.Scenes
            Scroll = pms.ScrollWheelValue;
 
             InitMap();
-            WM = new GUI.WindowManager();
-            
+            Console = new UI.ConsoleWindow(WM);
+            Console.Visible = true;
+            Console.Title = "Console";
+            WM.Windows.Add(Console);
         }
 
         public void Render(GameTime gameTime, GraphicsDevice device, SpriteBatch batch)
@@ -129,25 +143,29 @@ namespace Rog2D.Scenes
             }
            Player.Render(batch, Assets.SpriteSheets["sprites1"], m,Scale);
 
-            WM.Render(batch);
+            WM.Render(device);
+            /*
             Rectangle chatwin = new Rectangle(16, device.PresentationParameters.Bounds.Height - 256, 320, 240);
             GUI.Window w = new GUI.Window();
             w.Text = "Turn #" + Volatile.Scheduler.GetTime();
             w.Bounds = chatwin;
             w.Render(batch);
-           // GUI.Drawing.DrawFrame(chatwin, batch, Assets.SpriteSheets["GUI"]);
+            //*/
+            // GUI.Drawing.DrawFrame(chatwin, batch, Assets.SpriteSheets["GUI"]);
+            /*/
             Vector2 strpos = new Vector2(16 + 3, device.PresentationParameters.Bounds.Height - 26);
             int c = 15;
             foreach (string s in Volatile.MessageLog)
             {
                 c--;
                 strpos.Y -= 13;
-                GUI.Drawing.DrawString(strpos, batch, Assets.Fonts["console"], s, Color.White);
+               // GUI.Drawing.DrawString(strpos, batch, Assets.Fonts["console"], s, Color.White);
                 if (c < 0)
                     break;
             }
             strpos.Y = device.PresentationParameters.Bounds.Height - 19*13;
-          //  GUI.Drawing.DrawString(strpos, batch, Assets.Fonts["console"], , Color.Red);
+      //*/
+            //  GUI.Drawing.DrawString(strpos, batch, Assets.Fonts["console"], , Color.Red);
         }
 
         public void Update(GameTime gameTime)

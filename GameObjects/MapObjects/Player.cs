@@ -60,7 +60,17 @@ namespace GameObjects.MapObjects
                     if(d!=null)
                     {
                         d.IsDead = true;
-                        this.GiveItem(d.GetItem());
+                        Item i = d.GetItem();
+                        if(!i.Identified)
+                        {
+                            Items.ItemCard card = i as Items.ItemCard;
+                            if(card!=null)
+                            {
+                                card.Identified = Items.ItemCard.IdentifiedCards.Contains(card.Effect);
+                            }
+                        }
+
+                        this.GiveItem(i);
                         this.X = d.X;
                         this.Y = d.Y;
                     }

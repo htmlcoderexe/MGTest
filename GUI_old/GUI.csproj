@@ -11,6 +11,7 @@
     <AssemblyName>GUI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,22 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Console.cs" />
     <Compile Include="Control.cs" />
-    <Compile Include="Controls\Button.cs" />
-    <Compile Include="Controls\ProgressBar.cs" />
-    <Compile Include="Controls\RichTextDisplay.cs" />
-    <Compile Include="Controls\RichText\ActionLink.cs" />
-    <Compile Include="Controls\RichText\RichTextMultiLine.cs" />
-    <Compile Include="GFXUtility.cs" />
-    <Compile Include="IAction.cs" />
-    <Compile Include="Renderer.cs" />
+    <Compile Include="GUIDraw.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToolTipWindow.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="WindowManager.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
