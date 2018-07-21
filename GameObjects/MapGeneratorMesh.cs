@@ -161,11 +161,32 @@ namespace GameObjects
             return result;
         }
 
+        public static void AddWalls(Map Map)
+        {
+            GameObjects.Map.Tile floortile, walltile, sidetile, doortile, doortile2;
+            floortile = new Map.Tile();
+            floortile.Index = 1;
+            floortile.Passable = true;
+            walltile = new Map.Tile();
+            walltile.Index = 2;
+            walltile.Passable = false;
+            doortile = new Map.Tile();
+            doortile.Index = 4;
+            doortile.Passable = true;
+            for (int x = 1; x < Map.Width - 1; x++)
+                for (int y = 1; y < Map.Width - 1; y++)
+                    if (Map.Tiles[x, y].Index == floortile.Index)
+                        for (int a = -1; a < 2; a++)
+                            for (int b = -1; b < 2; b++)
+                                if (Map.Tiles[x + a, y + b].Index == 0)
+                                    Map.SetTile(new Point(x + a, y + b),walltile);
+        }
+
         public static void PlaceCorridorTile(Map Map, int X, int Y)
         {
             GameObjects.Map.Tile floortile, walltile, sidetile, doortile, doortile2;
             floortile = new Map.Tile();
-            floortile.Index = 7;
+            floortile.Index = 1;
             floortile.Passable = true;
             walltile = new Map.Tile();
             walltile.Index = 2;
@@ -174,7 +195,9 @@ namespace GameObjects
             doortile.Index = 4;
             doortile.Passable = true;
 
-
+            if (Map.Tiles[X, Y].Index == walltile.Index)
+                Map.SetTile(new Point(X, Y), doortile);
+            else
             Map.SetTile(new Point(X, Y), floortile);
         }
        
@@ -200,9 +223,10 @@ namespace GameObjects
 
         public static Map DrawCorridor(Map Map, Point start, Point end)
         {
+            //TODO: this is horrible. definitely fix! 
             GameObjects.Map.Tile floortile, walltile, sidetile, doortile, doortile2;
             floortile = new Map.Tile();
-            floortile.Index = 7;
+            floortile.Index = 1;
             floortile.Passable = true;
             walltile = new Map.Tile();
             walltile.Index = 2;
@@ -498,6 +522,8 @@ namespace GameObjects
             {
                 DrawCorridor(Map, roomcenters[(int)e.X], roomcenters[(int)e.Y]);
             }
+
+            AddWalls(Map);
             /*/
             for (int x = 1; x < Map.Width; x++)
                 for (int y = 1; y < Map.Height; y++)
@@ -583,7 +609,7 @@ namespace GameObjects
             Point spawn = p[0];
             Map.PlayerSpawn= spawn;
 
-            return Map;
+            //return Map;
 
             p = GameObjects.MapGeneratorMesh.PlaceOjects(0, 0, W, H, rekts, 6, spots, true);
             foreach(Point np in p)
