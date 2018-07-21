@@ -12,7 +12,7 @@ namespace GUI
     /// <summary>
     /// Deals with displaying and interaction of windows - all GUI action happens here.
     /// </summary>
-    public class WindowManager
+    public class WindowManager 
     {
         public List<Window> Windows;
         public Window MovingWindow;
