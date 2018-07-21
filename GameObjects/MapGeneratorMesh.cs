@@ -173,9 +173,10 @@ namespace GameObjects
             doortile = new Map.Tile();
             doortile.Index = 4;
             doortile.Passable = true;
+            //MOM GET THE CAMERA
             for (int x = 1; x < Map.Width - 1; x++)
                 for (int y = 1; y < Map.Width - 1; y++)
-                    if (Map.Tiles[x, y].Index == floortile.Index)
+                    if (Map.Tiles[x, y].Passable)
                         for (int a = -1; a < 2; a++)
                             for (int b = -1; b < 2; b++)
                                 if (Map.Tiles[x + a, y + b].Index == 0)
