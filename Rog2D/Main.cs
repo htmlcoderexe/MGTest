@@ -34,6 +34,7 @@ namespace Rog2D
 
 
             GraphicsDevice.Viewport = new Viewport(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
+            CurrentScene.ScreenResized(GraphicsDevice);
         }
 
 
@@ -71,6 +72,7 @@ namespace Rog2D
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Player.MessageCallback = new System.Action<string>(SetText);
+            GUI.Console.WriteCallback = Player.MessageCallback;
             Assets.SpriteSheets["tiles1"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\MapTiles.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["sprites1"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\Sprites.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["items1"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\items.png", System.IO.FileMode.Open));
@@ -108,8 +110,8 @@ namespace Rog2D
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            CurrentScene.HandleInput(gameTime);
             CurrentScene.Update(gameTime);
+            CurrentScene.HandleInput(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);

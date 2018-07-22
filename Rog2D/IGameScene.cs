@@ -16,6 +16,7 @@ namespace Rog2D
         void Update(GameTime gameTime);
         void HandleInput(GameTime gameTime);
         void Render(GameTime gameTime, GraphicsDevice device, SpriteBatch batch);
+        void ScreenResized(GraphicsDevice device);
         void Init();
     }
 }

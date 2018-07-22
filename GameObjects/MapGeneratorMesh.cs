@@ -173,7 +173,7 @@ namespace GameObjects
             doortile = new Map.Tile();
             doortile.Index = 4;
             doortile.Passable = true;
-            //MOM GET THE CAMERA
+            //Look Mom, no braces!
             for (int x = 1; x < Map.Width - 1; x++)
                 for (int y = 1; y < Map.Width - 1; y++)
                     if (Map.Tiles[x, y].Passable)

@@ -31,6 +31,16 @@ namespace Rog2D.Scenes
 
         public UI.ConsoleWindow Console;
 
+        public void ScreenResized(GraphicsDevice device)
+        {
+            int ScreenWidth = device.PresentationParameters.BackBufferWidth;
+            int ScreenHeight = device.PresentationParameters.BackBufferHeight;
+            //Screen = new RenderTarget2D(device, ScreenWidth, ScreenHeight, false, device.PresentationParameters.BackBufferFormat, device.PresentationParameters.DepthStencilFormat);
+            //b = new SpriteBatch(device);
+            WM.ScreenResized(ScreenWidth, ScreenHeight);
+           // this.Viewport = new Rectangle(this.Viewport.X, this.Viewport.Y, ScreenWidth, ScreenHeight);
+        }
+
         public void HandleInput(GameTime gameTime)
         {
 
@@ -44,6 +54,11 @@ namespace Rog2D.Scenes
 
             MouseState m = Mouse.GetState();
             KeyboardState k = Keyboard.GetState();
+            WM.MouseX = pms.X;
+            WM.MouseY = pms.Y;
+            WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
+            
+
             if (Player.IsActive)
             { 
             if (k.IsKeyUp(Keys.W) && pks.IsKeyDown(Keys.W))
@@ -67,9 +82,9 @@ namespace Rog2D.Scenes
                 InitMap();
 
             pks = k;
+                pms = m;
 
-
-                WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
+             //   WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
         }
 
             if (m.ScrollWheelValue >Scroll)
@@ -120,7 +135,12 @@ namespace Rog2D.Scenes
             Console = new UI.ConsoleWindow(WM);
             Console.Visible = true;
             Console.Title = "Console";
+            Console.X = 100000;
+            Console.Y = 0;
             WM.Windows.Add(Console);
+            WM.Screen.X = 0;
+            WM.Screen.Y = 0;
+            
         }
 
         public void Render(GameTime gameTime, GraphicsDevice device, SpriteBatch batch)
@@ -181,6 +201,7 @@ namespace Rog2D.Scenes
                 int t=Volatile.Scheduler.Next();
                // Player.Message("Turn #" + Volatile.Scheduler.GetTime());
             }
+            WM.Update((float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
         }
     }
 }

@@ -46,7 +46,11 @@ namespace TimeSystem
                 }
             }
         }
-
+        /// <summary>
+        /// Runs the next scheduled action
+        /// </summary>
+        /// <param name="Timeslot">The timeslot to run</param>
+        /// <returns>Time used to run the timeslot</returns>
         public int Run(KeyValuePair<int,List<IEvent>> Timeslot)
         {
             if (Timeslot.Value.Count <= 1)
@@ -63,6 +67,7 @@ namespace TimeSystem
             this.Queue.ToList();
             if(action.Owner!=null)
             action.Owner.Act();
+            //return time elapsed
             return dT;
         }
 
@@ -70,7 +75,10 @@ namespace TimeSystem
         {
             return Time;
         }
-
+        /// <summary>
+        /// Runs the next action, if any
+        /// </summary>
+        /// <returns>Current turn or action length. No idea, really.</returns>
         public int Next()
         {
             //bail early if nothing scheduled
