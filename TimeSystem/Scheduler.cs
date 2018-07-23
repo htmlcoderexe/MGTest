@@ -83,7 +83,7 @@ namespace TimeSystem
         {
             //bail early if nothing scheduled
             if (Queue.Count <= 0)
-                return Time;
+                return -1;
             //get the first (always lowest value in SortedDictionary)
             var first = Queue.First();
             //get the first action there

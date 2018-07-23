@@ -230,7 +230,7 @@ namespace GameObjects
             floortile.Index = 1;
             floortile.Passable = true;
             walltile = new Map.Tile();
-            walltile.Index = 2;
+            walltile.Index = 0;
             walltile.Passable = false;
             sidetile = new Map.Tile();
             sidetile.Index = 2;
@@ -468,7 +468,7 @@ namespace GameObjects
             floortile.Index = 1;
             floortile.Passable = true;
             walltile = new Map.Tile();
-            walltile.Index = 2;
+            walltile.Index = 0;
             walltile.Passable = false;
             sidetile = new Map.Tile();
             sidetile.Index = 2;
@@ -488,8 +488,8 @@ namespace GameObjects
             foreach (Rectangle REKT in rekts)
             {
                 side = new Rectangle(REKT.X, REKT.Y - 1, REKT.Width, 1);
-                wall = new Rectangle(REKT.X - 1, REKT.Y - 1, REKT.Width + 2, REKT.Height + 2);
-                FillRect(Map, wall, walltile);
+                //wall = new Rectangle(REKT.X - 1, REKT.Y - 1, REKT.Width + 2, REKT.Height + 2);
+               // FillRect(Map, wall, walltile);
                 FillRect(Map, REKT, floortile);
              //   FillRect(Map, side, sidetile);
              //  DrawRect(Map, wall, walltile);
@@ -524,7 +524,10 @@ namespace GameObjects
                 DrawCorridor(Map, roomcenters[(int)e.X], roomcenters[(int)e.Y]);
             }
 
-            AddWalls(Map);
+            //AddWalls(Map);
+            for (int x = 0; x < Map.Width; x++)
+                for (int y = 0; y < Map.Height; y++)
+                    Map.DoAutoTile(x, y);
             /*/
             for (int x = 1; x < Map.Width; x++)
                 for (int y = 1; y < Map.Height; y++)
@@ -612,18 +615,30 @@ namespace GameObjects
 
             //return Map;
 
-            p = GameObjects.MapGeneratorMesh.PlaceOjects(0, 0, W, H, rekts, 6, spots, true);
-            foreach(Point np in p)
+            p = GameObjects.MapGeneratorMesh.PlaceOjects(0, 0, W, H, rekts, 12, spots, true);
+
+            Dictionary<int, string> Mobs = new Dictionary<int, string>
             {
+                {0,"goblin of doom" },
+                {1, "evil ninja" },
+                {2, "giant mouse" },
+                {3, "doggie" },
+                {4, "spider" },
+                {5, "giant hornet" }
+            };
+            foreach (Point np in p)
+            {
+                int Selected = RNG.Next(0, 6);
                 Monster m = new Monster();
                 m.X = np.X;
                 m.Y = np.Y;
                 m.ParentMap = Map;
                 m.Friendliness = Actor.FriendlinessValue.Hostile;
-               
+                m.Icon = Selected + 2;
+                m.Name = Mobs[Selected];               
                 Map.Objects.Add(m);
             }
-            p = GameObjects.MapGeneratorMesh.PlaceOjects(0, 0, W, H, rekts, 3);
+            p = GameObjects.MapGeneratorMesh.PlaceOjects(0, 0, W, H, rekts, 2);
             foreach (Point np in p)
             {
                 ItemDrop c = new ItemDrop(new Items.ItemMLGCan());
@@ -635,7 +650,7 @@ namespace GameObjects
 
             Map.CardMappings = CreateMappings(Map.CardMappings,31);
 
-            p = PlaceOjects(0, 0, W, H, rekts, 28,p,true);
+            p = PlaceOjects(0, 0, W, H, rekts, 5,p,true);
             foreach (Point np in p)
             { 
                 ItemDrop c = new ItemDrop(new Items.ItemCard(RNG.Next(0,31)));

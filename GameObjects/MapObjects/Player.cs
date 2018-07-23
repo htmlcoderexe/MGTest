@@ -14,7 +14,7 @@ namespace GameObjects.MapObjects
 
         public Item Hotkey1Item { get; set; }
 
-        public Player()
+        public Player() : base()
         {
             this.Icon = 1;
         }
@@ -91,6 +91,9 @@ namespace GameObjects.MapObjects
         {
             Player.Message("You now have: "+Item.Name);
             this.Hotkey1Item = Item;
+            this.Inventory.Prepare();
+            this.Inventory.AddItem(Item);
+            this.Inventory.Commit();
         }
     }
 }

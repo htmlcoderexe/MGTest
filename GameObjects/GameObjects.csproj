@@ -47,6 +47,7 @@
     <Compile Include="Actions\UseItem.cs" />
     <Compile Include="Generation\Delaunay.cs" />
     <Compile Include="Generation\DisTree.cs" />
+    <Compile Include="Inventory.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Items\CardData.cs" />
     <Compile Include="Items\Equipment.cs" />

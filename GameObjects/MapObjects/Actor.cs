@@ -20,6 +20,12 @@ namespace GameObjects.MapObjects
         public Actor Target;
         public FriendlinessValue Friendliness { get; set; }
         public bool CanPhase { get; set; }
+        public Inventory Inventory { get; set; }
+
+        public Actor()
+        {
+            this.Inventory = new Inventory(16);
+        }
 
         public Point GetNextStep(int X, int Y, Map Map)
         {

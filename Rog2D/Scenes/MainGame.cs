@@ -23,13 +23,15 @@ namespace Rog2D.Scenes
 
         private Player Player;
 
-        float Scale=1;
+        float Scale=4;
 
         int Scroll;
 
         public GUI.WindowManager WM;
 
         public UI.ConsoleWindow Console;
+
+        public UI.InventoryWindow InWin;
 
         public void ScreenResized(GraphicsDevice device)
         {
@@ -62,19 +64,32 @@ namespace Rog2D.Scenes
             if (Player.IsActive)
             { 
             if (k.IsKeyUp(Keys.W) && pks.IsKeyDown(Keys.W))
-                Player.RequestMove(0, -1, Map, 7);
+                Player.RequestMove(0, -1, Map, 10);
             if (k.IsKeyUp(Keys.S) && pks.IsKeyDown(Keys.S))
-                Player.RequestMove(0, 1, Map, 7);
+                Player.RequestMove(0, 1, Map, 10);
             if (k.IsKeyUp(Keys.A) && pks.IsKeyDown(Keys.A))
-                Player.RequestMove(-1, 0, Map, 7);
+                Player.RequestMove(-1, 0, Map, 10);
             if (k.IsKeyUp(Keys.D) && pks.IsKeyDown(Keys.D))
-                Player.RequestMove(1, 0, Map, 7);
-            if (k.IsKeyUp(Keys.E) && pks.IsKeyDown(Keys.E))
-            {
-                    if(Player.Hotkey1Item!=null)
-                    Player.RequestUseItem(Player.Hotkey1Item);
-            }
-            if (k.IsKeyDown(Keys.LeftShift))
+                Player.RequestMove(1, 0, Map, 10);
+                if (k.IsKeyUp(Keys.E) && pks.IsKeyDown(Keys.E))
+                {
+                    if (Player.Hotkey1Item != null)
+                        Player.RequestUseItem(Player.Hotkey1Item);
+                }
+                if (k.IsKeyUp(Keys.B) && pks.IsKeyDown(Keys.B))
+                {
+                    if (InWin != null)
+                    {
+                        InWin.Close();
+                        InWin = null;
+                    }
+                    else
+                    {
+                        InWin = new UI.InventoryWindow(WM, Player.Inventory);
+                        WM.Add(InWin);
+                    }
+                }
+                if (k.IsKeyDown(Keys.LeftShift))
                 Player.CanPhase = true;
             if (k.IsKeyUp(Keys.LeftShift))
                 Player.CanPhase = false;
@@ -103,7 +118,7 @@ namespace Rog2D.Scenes
             Map = new GameObjects.Map(20, 20);
             //GameObjects.MapGeneratorDigger Mapper = new GameObjects.MapGeneratorDigger(64, 64);
 
-            Map = GameObjects.MapGeneratorMesh.Generate(256, 256, 100, 5, 0.05f);
+            Map = GameObjects.MapGeneratorMesh.Generate(48, 48, 50, 3, 0.05f);
             //World.Map = Mapper.Generate(100);
             Player.X = Map.PlayerSpawn.X;
             Player.Y = Map.PlayerSpawn.Y;
@@ -137,10 +152,10 @@ namespace Rog2D.Scenes
             Console.Title = "Console";
             Console.X = 100000;
             Console.Y = 0;
-            WM.Windows.Add(Console);
+            WM.Add(Console);
             WM.Screen.X = 0;
             WM.Screen.Y = 0;
-            
+            //WM.Add(new UI.InventoryWindow(WM, Map.Player.Inventory));
         }
 
         public void Render(GameTime gameTime, GraphicsDevice device, SpriteBatch batch)
@@ -156,7 +171,7 @@ namespace Rog2D.Scenes
             X += device.PresentationParameters.Bounds.Width / 2;
             Y += device.PresentationParameters.Bounds.Height / 2;
             m = Matrix.CreateTranslation(new Vector3(X, Y, 0));
-           Map.Render(batch, Assets.SpriteSheets["tiles1"], m,Scale);
+           Map.Render(batch, Assets.SpriteSheets["tiles1"],Assets.SpriteSheets["autotile1"], m,Scale);
             foreach (GameObjects.MapObject o in Map.Objects)
             {
                 o.Render(batch, Assets.SpriteSheets["sprites1"], m,Scale);
@@ -198,7 +213,11 @@ namespace Rog2D.Scenes
             }
            if(!Player.IsActive ||countactors==0)
             {
-                int t=Volatile.Scheduler.Next();
+                //do stuff as long as it's not the player's turn
+                while(Volatile.Scheduler.Next()!=-1 && !Player.IsActive)
+                {
+
+                }
                // Player.Message("Turn #" + Volatile.Scheduler.GetTime());
             }
             WM.Update((float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
