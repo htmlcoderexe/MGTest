@@ -624,18 +624,20 @@ namespace GameObjects
                 {2, "giant mouse" },
                 {3, "doggie" },
                 {4, "spider" },
-                {5, "giant hornet" }
+                {5, "giant hornet" },
+                {6, "cheetah man" }
             };
             foreach (Point np in p)
             {
-                int Selected = RNG.Next(0, 6);
+                int Selected = RNG.Next(0, 7);
                 Monster m = new Monster();
                 m.X = np.X;
                 m.Y = np.Y;
                 m.ParentMap = Map;
                 m.Friendliness = Actor.FriendlinessValue.Hostile;
                 m.Icon = Selected + 2;
-                m.Name = Mobs[Selected];               
+                m.Name = Mobs[Selected];
+                m.Speed = RNG.NextDouble() > 0.5 ? 12 : 4;      
                 Map.Objects.Add(m);
             }
             p = GameObjects.MapGeneratorMesh.PlaceOjects(0, 0, W, H, rekts, 2);

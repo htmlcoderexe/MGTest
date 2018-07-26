@@ -51,6 +51,7 @@
     <Compile Include="UI\InventoryControl.cs" />
     <Compile Include="UI\InventoryWindow.cs" />
     <Compile Include="UI\ItemSlot.cs" />
+    <Compile Include="UI\ItemWindow.cs" />
     <Compile Include="Volatile.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>

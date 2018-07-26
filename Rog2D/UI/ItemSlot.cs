@@ -44,7 +44,14 @@ namespace Rog2D.UI
         public override void Click(float X, float Y)
         {
             if (!CanGrab && !CanPut) //nothing to do here
+            {
+                if (this.Item != null)
+                {
+                    ItemWindow w = new ItemWindow(this.WM, (this.Item as IconItem).GetItem());
+                    WM.Add(w);
+                }
                 return;
+            }
             GUI.IActionIcon mouseItem = WM.MouseGrab;
             GUI.IActionIcon currentItem = this.Item;
             if (mouseItem == null)
@@ -78,9 +85,9 @@ namespace Rog2D.UI
                 else //swap items
                 {
                     this.Item = mouseItem;
-                    ItemIn?.Invoke(this, new ItemEventArgs(mouseItem));
                     WM.MouseGrab = currentItem;
                     ItemOut?.Invoke(this, new ItemEventArgs(currentItem));
+                    ItemIn?.Invoke(this, new ItemEventArgs(mouseItem));
 
                 }
             }

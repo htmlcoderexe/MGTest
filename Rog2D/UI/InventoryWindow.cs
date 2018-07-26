@@ -14,8 +14,8 @@ namespace Rog2D.UI
             InventoryControl c = new InventoryControl( WM, Inventory,4);
             this.Controls.Add(c);
             this.Title = "Inventory";
-            this.Width = 256;
-            this.Height = 256;
+            this.Width = c.Width;
+            this.Height = c.Height;
         }
     }
 }

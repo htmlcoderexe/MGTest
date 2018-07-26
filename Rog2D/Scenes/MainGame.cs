@@ -118,7 +118,7 @@ namespace Rog2D.Scenes
             Map = new GameObjects.Map(20, 20);
             //GameObjects.MapGeneratorDigger Mapper = new GameObjects.MapGeneratorDigger(64, 64);
 
-            Map = GameObjects.MapGeneratorMesh.Generate(48, 48, 50, 3, 0.05f);
+            Map = GameObjects.MapGeneratorMesh.Generate(128, 128, 150, 3, 0.01f);
             //World.Map = Mapper.Generate(100);
             Player.X = Map.PlayerSpawn.X;
             Player.Y = Map.PlayerSpawn.Y;

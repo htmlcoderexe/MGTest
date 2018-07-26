@@ -77,8 +77,11 @@ namespace Rog2D.UI
                     ItemSlot s = new ItemSlot(ii);
                     s.X = x * slotwidth;
                     s.Y = y * slotwidth;
-                    s.CanGrab = true;
-                    s.CanPut = true;
+                    //*
+                    s.CanGrab = false;
+                    s.CanPut = false;
+
+                    //*/
                     //s.BeforeItemChanged += new ItemSlot.ItemEventHandler((sender, e) => { if(((e as ItemSlot.ItemEventArgs).Item as GameObjects.Item) ==null) e.Cancel=true; });
                     s.ItemOut += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = null; });
                     s.ItemIn += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = (((e as ItemSlot.ItemEventArgs).Item) as IconItem).GetItem(); });

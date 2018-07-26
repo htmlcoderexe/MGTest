@@ -21,6 +21,7 @@ namespace GameObjects.MapObjects
         public FriendlinessValue Friendliness { get; set; }
         public bool CanPhase { get; set; }
         public Inventory Inventory { get; set; }
+        public int Speed;
 
         public Actor()
         {

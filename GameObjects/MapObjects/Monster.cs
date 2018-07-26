@@ -23,7 +23,7 @@ namespace GameObjects.MapObjects
             {
                 Point p = GetNextStep(Target.X, Target.Y, ParentMap);
 
-                RequestMove(p.X, p.Y, ParentMap, 12);
+                RequestMove(p.X, p.Y, ParentMap, this.Speed);
             }
         }
 
