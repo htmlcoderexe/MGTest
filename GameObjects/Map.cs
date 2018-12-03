@@ -148,7 +148,8 @@ namespace GameObjects
         public Tile[,] Tiles;
         public List<MapObject> Objects;
         public MapObjects.Player Player;
-        int spriteWidth=16;
+        public const int spriteWidth=16;
+        public static GUI.Renderer Renderer;
         public Map(int W, int H)
         {
             this.Tiles = new Tile[W, H];
@@ -170,6 +171,7 @@ namespace GameObjects
             CardMappings[26] = 26;
             //10 of Diamonds
             CardMappings[12] = 12;
+
         }
  public static void Generate()
         {
@@ -279,6 +281,7 @@ namespace GameObjects
 
             }
             b.End();
+            
         }
 
     }

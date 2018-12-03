@@ -46,8 +46,20 @@ namespace Rog2D.UI
         public void Render(int X, int Y, GraphicsDevice device, Renderer Renderer, bool RenderCooldown = false, bool RenderEXP = false)
         {
             Renderer.SetTexture(Assets.SpriteSheets["sprites1"]);
-            Renderer.RenderIconEx(device, X, Y, this.Icon);
-            
+            GameObjects.Items.ItemWand w = this.Item as GameObjects.Items.ItemWand;
+            if (w != null)
+            {
+                Renderer.SetColour(w.Component1Color);
+                Renderer.RenderIconEx(device, X, Y, w.Component1 + 64);
+                Renderer.SetColour(w.Component2Color);
+                Renderer.RenderIconEx(device, X, Y, w.Component2 + 80);
+                Renderer.SetColour(w.Component3Color);
+                Renderer.RenderIconEx(device, X, Y, w.Component3 + 96);
+            }
+            else
+            {
+                Renderer.RenderIconEx(device, X, Y, this.Icon);
+            }
         }
 
         public void Use()
@@ -71,10 +83,7 @@ namespace Rog2D.UI
                 {
                     int i = y * Width + x;
                     Item item = Inventory.Items[i];
-                    IconItem ii = null;
-                    if (item != null)
-                        ii = new IconItem(item);
-                    ItemSlot s = new ItemSlot(ii);
+                    ItemSlot s = new ItemSlot(item);
                     s.X = x * slotwidth;
                     s.Y = y * slotwidth;
                     //*
@@ -84,7 +93,7 @@ namespace Rog2D.UI
                     //*/
                     //s.BeforeItemChanged += new ItemSlot.ItemEventHandler((sender, e) => { if(((e as ItemSlot.ItemEventArgs).Item as GameObjects.Item) ==null) e.Cancel=true; });
                     s.ItemOut += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = null; });
-                    s.ItemIn += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = (((e as ItemSlot.ItemEventArgs).Item) as IconItem).GetItem(); });
+                    s.ItemIn += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = (e as ItemSlot.ItemEventArgs).Item; });
                     this.AddControl(s);
                 }
         }

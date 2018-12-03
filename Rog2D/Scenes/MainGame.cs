@@ -117,7 +117,7 @@ namespace Rog2D.Scenes
         {
             Map = new GameObjects.Map(20, 20);
             //GameObjects.MapGeneratorDigger Mapper = new GameObjects.MapGeneratorDigger(64, 64);
-
+            Map.Renderer = WM.Renderer;
             Map = GameObjects.MapGeneratorMesh.Generate(128, 128, 150, 3, 0.01f);
             //World.Map = Mapper.Generate(100);
             Player.X = Map.PlayerSpawn.X;
@@ -172,11 +172,13 @@ namespace Rog2D.Scenes
             Y += device.PresentationParameters.Bounds.Height / 2;
             m = Matrix.CreateTranslation(new Vector3(X, Y, 0));
            Map.Render(batch, Assets.SpriteSheets["tiles1"],Assets.SpriteSheets["autotile1"], m,Scale);
+
+            Map.Renderer.SetTexture(Assets.SpriteSheets["sprites1"]);
             foreach (GameObjects.MapObject o in Map.Objects)
             {
-                o.Render(batch, Assets.SpriteSheets["sprites1"], m,Scale);
+                o.Render(batch, Assets.SpriteSheets["sprites1"], X,Y,Scale);
             }
-           Player.Render(batch, Assets.SpriteSheets["sprites1"], m,Scale);
+           Player.Render(batch, Assets.SpriteSheets["sprites1"], X,Y,Scale);
 
             WM.Render(device);
             /*

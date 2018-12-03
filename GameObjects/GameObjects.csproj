@@ -53,6 +53,8 @@
     <Compile Include="Items\Equipment.cs" />
     <Compile Include="Items\ItemCard.cs" />
     <Compile Include="Items\ItemMLGCan.cs" />
+    <Compile Include="Items\ItemPotion.cs" />
+    <Compile Include="Items\ItemWand.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapGeneratorDigger.cs" />
     <Compile Include="MapGeneratorMesh.cs" />
@@ -68,6 +70,10 @@
     <Compile Include="Spell.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GUI\GUI.csproj">
+      <Project>{e6a21439-8cd4-4659-b797-a069f95eeff9}</Project>
+      <Name>GUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TimeSystem\TimeSystem.csproj">
       <Project>{da35bc8d-bb72-4eea-a8be-f557a41d4c00}</Project>
       <Name>TimeSystem</Name>

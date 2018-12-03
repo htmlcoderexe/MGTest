@@ -8,14 +8,14 @@ namespace Rog2D.UI
 {
     public class ItemSlot : GUI.Control
     {
-        public GUI.IActionIcon Item;
+        public GameObjects.Item Item;
         public bool CanGrab;
         public bool CanPut;
         public delegate void ItemEventHandler(object sender, ItemEventArgs e);
         public class ItemEventArgs : System.ComponentModel.CancelEventArgs
         {
-            public GUI.IActionIcon Item;
-            public ItemEventArgs(GUI.IActionIcon Item)
+            public GameObjects.Item Item;
+            public ItemEventArgs(GameObjects.Item Item)
             {
                 this.Item = Item;
             }
@@ -23,7 +23,7 @@ namespace Rog2D.UI
         public event ItemEventHandler ItemOut;
         public event ItemEventHandler ItemIn;
         public event ItemEventHandler BeforeItemChanged;
-        public ItemSlot(GUI.IActionIcon Item)
+        public ItemSlot(GameObjects.Item Item)
         {
             this.Item = Item;
             this.Width = 80;
@@ -37,8 +37,9 @@ namespace Rog2D.UI
             Renderer.SetTexture(Renderer.WindowSkin);
             GUI.Renderer.Rect r = new GUI.Renderer.Rect(48, 48, 40, 40);
             Renderer.RenderQuad(device, X, Y, Width, Height, r);
+            Renderer.SetTexture(Assets.SpriteSheets["sprites1"]);
             if (Item != null)
-                Item.Render(X + 8, Y + 8, device, Renderer, false, false);
+                Item.Render(X + 8, Y + 8, device, Renderer,4);
             base.Render(device, Renderer, X, Y);
         }
         public override void Click(float X, float Y)
@@ -47,13 +48,14 @@ namespace Rog2D.UI
             {
                 if (this.Item != null)
                 {
-                    ItemWindow w = new ItemWindow(this.WM, (this.Item as IconItem).GetItem());
+                    ItemWindow w = new ItemWindow(this.WM, this.Item );
                     WM.Add(w);
                 }
                 return;
             }
-            GUI.IActionIcon mouseItem = WM.MouseGrab;
-            GUI.IActionIcon currentItem = this.Item;
+            /*
+            GameObjects.Item mouseItem = WM.MouseGrab;
+            GameObjects.Item currentItem = this.Item;
             if (mouseItem == null)
             {
                 if (currentItem == null) //nothing to do here
@@ -91,6 +93,7 @@ namespace Rog2D.UI
 
                 }
             }
+            */
             base.Click(X, Y);
         }
         public override void MouseMove(float X, float Y)

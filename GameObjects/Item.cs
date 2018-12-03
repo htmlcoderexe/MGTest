@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameObjects.MapObjects;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameObjects
 {
@@ -38,6 +39,12 @@ namespace GameObjects
         public virtual string GetName()
         {
             return this.Name;
+        }
+
+        public virtual void Render(int X, int Y, GraphicsDevice device, GUI.Renderer Renderer, float Scale=1.0f)
+        {
+
+            Renderer.RenderIconEx(device, X, Y, this.Icon,Scale);
         }
     }
 }

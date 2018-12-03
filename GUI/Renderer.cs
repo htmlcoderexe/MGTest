@@ -475,10 +475,10 @@ namespace GUI
             VertexPositionTexture[] i = GFXUtility.Icon(device, X, Y, Icon);
             device.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, i, 0, 2);
         }
-        public void RenderIconEx(GraphicsDevice device, float X, float Y, int Icon)
+        public void RenderIconEx(GraphicsDevice device, float X, float Y, int Icon, float Scale=1.0f)
         {
             // SetTexture(bagIcons);
-            VertexPositionTexture[] i = GFXUtility.Icon(device, X, Y, Icon);
+            VertexPositionTexture[] i = GFXUtility.Icon(device, X, Y, Icon, (int)(16*Scale));
             device.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, i, 0, 2);
         }
         public void RenderSmallIcon(GraphicsDevice device, float X, float Y, int Icon)

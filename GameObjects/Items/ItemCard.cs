@@ -20,7 +20,7 @@ namespace GameObjects.Items
                 IdentifiedCards = ((int[])SpecialCards.Clone()).ToList();
             this.Effect = Effect;
             this.Icon = Map.CardMappings[Effect]+32;
-            this.Name = "Effect #" + Effect + ", Icon #" + this.Icon;
+            this.Name = CardData.Names[Map.CardMappings[Effect]];
             if (SpecialCards.Contains(this.Effect))
                 this.Identified = true;
         }

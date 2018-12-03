@@ -43,6 +43,41 @@ namespace GameObjects.Items
             {30, "It will randomly teleport you elsewhere." },
             {31, "It will grant you discounts in a shop of your choosing." },
         };
+        public static Dictionary<int, string> Names = new Dictionary<int, string>
+        {
+            {0, "Ace of Hearts"           },
+            {1, "King of Hearts"          },
+            {2, "Queen of Hearts"         },
+            {3, "Jack of Hearts"          },
+            {4, "Ten of Hearts"           },
+            {5, "Seven of Hearts"         },
+            {6, "Four of Hearts"          },
+            {7, "Red Joker"     },
+            {8, "Ace of Diamonds"           },
+            {9, "King of Diamonds"          },
+            {10,"Queen of Diamonds"         },
+            {11,"Jack of Diamonds"          },
+            {12,"Ten of Diamonds"           },
+            {13,"Seven of Diamonds"         },
+            {14,"Four of Diamonds"          },
+            {15, "Blank Card" },
+            {16, "Ace of Clubs"           },
+            {17, "King of Clubs"          },
+            {18, "Queen of Clubs"         },
+            {19, "Jack of Clubs"          },
+            {20, "Ten of Clubs"           },
+            {21, "Seven of Clubs"         },
+            {22, "Four of Clubs"          },
+            {23, "Black Joker" },
+            {24, "Ace of Spades"           },
+            {25, "King of Spades"          },
+            {26, "Queen of Spades"         },
+            {27, "Jack of Spades"          },
+            {28, "Ten of Spades"           },
+            {29, "Seven of Spades"         },
+            {30, "Four of Spades"          },
+            {31, "VIP Card" },
+        };
 
         public static bool Apply(MapObjects.Actor Target)
         {

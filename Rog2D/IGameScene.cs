@@ -18,5 +18,5 @@ namespace Rog2D
         void Render(GameTime gameTime, GraphicsDevice device, SpriteBatch batch);
         void ScreenResized(GraphicsDevice device);
         void Init();
-    }
+    } 
 }

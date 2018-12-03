@@ -652,10 +652,20 @@ namespace GameObjects
 
             Map.CardMappings = CreateMappings(Map.CardMappings,31);
 
-            p = PlaceOjects(0, 0, W, H, rekts, 5,p,true);
+            p = PlaceOjects(0, 0, W, H, rekts, 15, p, true);
             foreach (Point np in p)
-            { 
-                ItemDrop c = new ItemDrop(new Items.ItemCard(RNG.Next(0,31)));
+            {
+                ItemDrop c = new ItemDrop(new Items.ItemCard(RNG.Next(0, 32)));
+                c.X = np.X;
+                c.Y = np.Y;
+                c.ParentMap = Map;
+                Map.Objects.Add(c);
+            }
+            p = PlaceOjects(0, 0, W, H, rekts, 150, p, true);
+            foreach (Point np in p)
+            {
+                
+                ItemDrop c = new ItemDrop(new Items.ItemWand(RNG));
                 c.X = np.X;
                 c.Y = np.Y;
                 c.ParentMap = Map;

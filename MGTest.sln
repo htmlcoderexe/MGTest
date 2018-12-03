@@ -9,6 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rog2D", "Rog2D\Rog2D.csproj
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameObjects", "GameObjects\GameObjects.csproj", "{7C6E7616-52BE-4118-8D1B-5E8DEDFC0495}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6A21439-8CD4-4659-B797-A069F95EEFF9} = {E6A21439-8CD4-4659-B797-A069F95EEFF9}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{E6A21439-8CD4-4659-B797-A069F95EEFF9}"
 EndProject

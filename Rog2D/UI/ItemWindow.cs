@@ -16,7 +16,7 @@ namespace Rog2D.UI
             this.Item = Item;
             this.Width = 256 + this.Margin.X + this.Margin.Width;
             this.Height = 256;
-            ItemSlot s = new ItemSlot(new IconItem(Item));
+            ItemSlot s = new ItemSlot(Item);
             s.CanGrab = false;
             s.CanPut = false;
             s.X = 80;
