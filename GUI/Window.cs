@@ -148,8 +148,11 @@ namespace GUI
 
         public override void Render(GraphicsDevice device, Renderer Renderer, int X, int Y)
         {
-            Renderer.RenderFrame(device, this.X, this.Y, this.Width, this.Height);
+            Renderer.RenderFrame(device, this.X, this.Y, this.Width+Margin.X+Margin.Width, this.Height+Margin.Y+Margin.Width);
             Renderer.RenderSmallText(device, this.X + 5, this.Y, this.Title, Color.White);
+
+
+            //the 16 is a hackity hackity hack, please demystify it at some point #TODO
             Renderer.RenderCloseButton(device, this.X + this.Width - 16, this.Y, this.CloseHot);
             base.Render(device, Renderer, Margin.X+X, Margin.Y+Y);
         }
