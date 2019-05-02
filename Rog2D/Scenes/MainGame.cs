@@ -59,9 +59,10 @@ namespace Rog2D.Scenes
 
             MouseState m = Mouse.GetState();
             KeyboardState k = Keyboard.GetState();
+            bool MouseHandled = false;
             WM.MouseX = pms.X;
             WM.MouseY = pms.Y;
-            WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
+            MouseHandled=WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
             
 
             if (Player.IsActive)
@@ -99,13 +100,27 @@ namespace Rog2D.Scenes
             if (k.IsKeyUp(Keys.F5) && pks.IsKeyDown(Keys.F5))
                 InitMap();
 
-            pks = k;
-                pms = m;
+              Point MousePick= new Point();
                 //this is debug, do not leave in for too long!!
-                if(Device!=null)
-                Console.AppendMessage(MapMousePick(m.X, m.Y, Scale, Device).ToString());
+
+                if (Device!=null)
+                {
+
+                    MousePick=MapMousePick(m.X, m.Y, Scale, Device);
+                }
+
+                if(!MouseHandled)
+                {
+                    if(m.LeftButton== ButtonState.Pressed && pms.LeftButton==ButtonState.Released)
+                    {
+                        MapObject mo = Map.ItemAt(MousePick.X, MousePick.Y);
+                        Player.Message(mo.Name);
+                    }
+                }
              //   WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
         }
+            pks = k;
+            pms = m;
 
             if (m.ScrollWheelValue >Scroll)
             {
@@ -135,8 +150,10 @@ namespace Rog2D.Scenes
             float offsetY = Player.Y * Scale * -spriteWidth;
             offsetX += device.PresentationParameters.Bounds.Width / 2;
             offsetY += device.PresentationParameters.Bounds.Height / 2;
+            //then apply offset to real mouse coords to get mouse coords relative to the map
             MouseX -= (int)offsetX;
             MouseY -= (int)offsetY;
+            //then translate those based on scale and sprite size (hardcoded to 16 as of now)
             float X = (float)MouseX / Scale / spriteWidth;
             float Y = (float)MouseY / Scale / spriteWidth;
             //simple truncation insufficient incase of negative values - normally unexpected at this point but would cause weirdness if later implemented
