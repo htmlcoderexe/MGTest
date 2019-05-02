@@ -173,7 +173,7 @@ namespace GameObjects
             CardMappings[12] = 12;
 
         }
- public static void Generate()
+        public static void Generate()
         {
 
         }
@@ -267,8 +267,8 @@ namespace GameObjects
                         Scale = 0.1f;
                     if(this.Tiles[x,y].Index==0)
                     {
-                        Vector2 autov = BlobIndices[this.Tiles[x,y].WallAutoTileCode] * spriteWidth;
-                        rekt = new Rectangle((int)autov.X, (int)autov.Y, spriteWidth, spriteWidth);
+                        Vector2 AutoTileStart = BlobIndices[this.Tiles[x,y].WallAutoTileCode] * spriteWidth;
+                        rekt = new Rectangle((int)AutoTileStart.X, (int)AutoTileStart.Y, spriteWidth, spriteWidth);
                         b.Draw(autot, new Vector2(x * spriteWidth * Scale, y * spriteWidth * Scale), rekt, Color.White, 0.0f, Vector2.Zero, Scale, SpriteEffects.None, 0.0f);
 
                     }

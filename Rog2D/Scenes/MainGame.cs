@@ -23,6 +23,8 @@ namespace Rog2D.Scenes
 
         private Player Player;
 
+        private GraphicsDevice Device;
+
         float Scale=4;
 
         int Scroll;
@@ -40,6 +42,7 @@ namespace Rog2D.Scenes
             //Screen = new RenderTarget2D(device, ScreenWidth, ScreenHeight, false, device.PresentationParameters.BackBufferFormat, device.PresentationParameters.DepthStencilFormat);
             //b = new SpriteBatch(device);
             WM.ScreenResized(ScreenWidth, ScreenHeight);
+            Device = device;
            // this.Viewport = new Rectangle(this.Viewport.X, this.Viewport.Y, ScreenWidth, ScreenHeight);
         }
 
@@ -98,7 +101,9 @@ namespace Rog2D.Scenes
 
             pks = k;
                 pms = m;
-
+                //this is debug, do not leave in for too long!!
+                if(Device!=null)
+                Console.AppendMessage(MapMousePick(m.X, m.Y, Scale, Device).ToString());
              //   WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
         }
 
@@ -112,7 +117,32 @@ namespace Rog2D.Scenes
             }
            Scroll = m.ScrollWheelValue;
         }
+        /// <summary>
+        /// Translates mouse coordinates to world coordinates
+        /// </summary>
+        /// <param name="MouseX">Input X</param>
+        /// <param name="MouseY">Input Y</param>
+        /// <param name="Scale">Current display scale</param>
+        /// <returns>Translated coordinates as integer 2-tuple (a Point)</returns>
+        public Point MapMousePick(int MouseX, int MouseY, float Scale, GraphicsDevice device)
+        {
+            //This gets copypasted into every method translating between world and screen, #TODO hunt it down and somehow globalise it or something
+            int spriteWidth = 16;
 
+            Point result = new Point();
+            //terribly inefficient but first work out offset
+            float offsetX = Player.X * Scale * -spriteWidth;
+            float offsetY = Player.Y * Scale * -spriteWidth;
+            offsetX += device.PresentationParameters.Bounds.Width / 2;
+            offsetY += device.PresentationParameters.Bounds.Height / 2;
+            MouseX -= (int)offsetX;
+            MouseY -= (int)offsetY;
+            float X = (float)MouseX / Scale / spriteWidth;
+            float Y = (float)MouseY / Scale / spriteWidth;
+            //simple truncation insufficient incase of negative values - normally unexpected at this point but would cause weirdness if later implemented
+            result = new Point((int)Math.Floor(X), (int)Math.Floor(Y));
+            return result;
+        }
         public void InitMap()
         {
             Map = new GameObjects.Map(20, 20);
