@@ -71,24 +71,33 @@ namespace Rog2D
             //   GameObjects.MapGenerator.DrawRect(World.Map, 3, 5, 8, 8, floor);
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            //this line allows us to Player.Message(string)
             Player.MessageCallback = new System.Action<string>(SetText);
+            //and this - to Console.Write(string) or Console.WriteEx(string, callbacks)
             GUI.Console.WriteCallback = Player.MessageCallback;
+            //I swear there's gotta be a prettier way to load this, like a config file or something.
+            //possible #TODO?
             Assets.SpriteSheets["tiles1"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\MapTiles.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["sprites1"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\Sprites.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["items1"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\items.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["GUI"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\GUI.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["test_bus"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\bus.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["autotile1"]= Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\autotile.png", System.IO.FileMode.Open));
-            GUI.Renderer r = new GUI.Renderer(GraphicsDevice);
-            r.WindowSkin = Assets.SpriteSheets["GUI"];
             Assets.Fonts["console"] = Content.Load<SpriteFont>("Play");
-            r.UIFont = Assets.Fonts["console"];
             Assets.Shaders["GUI"] = Content.Load<Effect>("GUI");
-            r.GUIEffect = Assets.Shaders["GUI"];
+            GUI.Renderer r = new GUI.Renderer(GraphicsDevice)
+            {
+                WindowSkin = Assets.SpriteSheets["GUI"],
+                UIFont = Assets.Fonts["console"],
+                GUIEffect = Assets.Shaders["GUI"]
+            };
             // TODO: use this.Content to load your game content here
-            
-            GUI.WindowManager WM = new GUI.WindowManager();
-            WM.Renderer = r;
+
+            GUI.WindowManager WM = new GUI.WindowManager
+            {
+                Renderer = r
+            };
+            //perhaps just give any scene a WM at this point?
             (CurrentScene as Scenes.MainGame).WM = WM;
             CurrentScene.Init();
 
