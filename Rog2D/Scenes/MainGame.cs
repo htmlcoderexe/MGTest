@@ -114,7 +114,7 @@ namespace Rog2D.Scenes
                     if(m.LeftButton== ButtonState.Pressed && pms.LeftButton==ButtonState.Released)
                     {
                         MapObject mo = Map.ItemAt(MousePick.X, MousePick.Y);
-                        Player.Message(mo.Name);
+                        Player.Message(mo.GetType().ToString());
                     }
                 }
              //   WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
