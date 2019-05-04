@@ -65,7 +65,7 @@ namespace Rog2D
         protected override void LoadContent()
         {
             CurrentScene = new Scenes.MainGame();
-            
+
 
             //World.Player.CanPhase = true;
             //   GameObjects.MapGenerator.DrawRect(World.Map, 3, 5, 8, 8, floor);
@@ -100,6 +100,7 @@ namespace Rog2D
             //perhaps just give any scene a WM at this point?
             (CurrentScene as Scenes.MainGame).WM = WM;
             CurrentScene.Init();
+            CurrentScene.ScreenResized(GraphicsDevice);
 
         }
 
