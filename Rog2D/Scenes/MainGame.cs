@@ -114,7 +114,47 @@ namespace Rog2D.Scenes
                     if(m.LeftButton== ButtonState.Pressed && pms.LeftButton==ButtonState.Released)
                     {
                         MapObject mo = Map.ItemAt(MousePick.X, MousePick.Y);
-                        Player.Message(mo.GetType().ToString());
+                        string Message = "There is nothing in here.";
+                        if (mo!=null)
+                        {
+
+                            //Player.Message(mo.GetType().ToString());
+                            if (mo is ItemDrop drop)
+                            {
+                                Message = "It is " + drop.GetItem().Name + ". " + drop.GetItem().GetDescription();
+                            }
+                            else if (mo is Monster monster)
+                            {
+                                Message = "It is " + monster.Name + ".";
+                            }
+                            else if (mo is Player player)
+                            {
+                                Message = "It is you! Hi there!";
+                            }
+                        }
+                        else
+                        {
+                            int TileNo = Map.Tiles[MousePick.X, MousePick.Y].Index;
+                            switch(TileNo)
+                            {
+                                case 1://floor
+                                    {
+                                        Message = "It is floor.";
+                                        break;
+                                    }
+                                case 0://wall
+                                    {
+                                        Message = "It is wall.";
+                                        break;
+                                    }
+                                default://floor
+                                    {
+                                        Message = "It is AsdaADSWDAdsd.";
+                                        break;
+                                    }
+                            }
+                        }
+                        Player.Message(Message);
                     }
                 }
              //   WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
