@@ -26,6 +26,7 @@ namespace Rog2D.UI
             this.Title = Item.GetName();
             this.AddControl(t);
             this.AddControl(s);
+            this.Center();
         }
     }
 }
