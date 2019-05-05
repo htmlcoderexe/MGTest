@@ -213,7 +213,20 @@ namespace GUI
             }
             this.Windows[this.Windows.Count - 1] = Window;
         }
-        
+        /// <summary>
+        /// Centers a window on the screen; both optional params default to true so that the most common use case is only using one param.
+        /// </summary>
+        /// <param name="Window">Window to be centered</param>
+        /// <param name="CenterX">Horisontal centering, defaults to true</param>
+        /// <param name="CenterY">Vertical centering, defaults to true</param>
+        public static void Center(Window Window,bool CenterX=true,bool CenterY=true)
+        {
+            if (CenterX)
+                Window.X = (int)(Window.WM.Screen.X / 2.0f - (Window.Width + Window.Margin.X + Window.Margin.Width) / 2.0f);
+            if (CenterY)
+                Window.Y = (int)(Window.WM.Screen.Y / 2.0f - (Window.Height + Window.Margin.Y + Window.Margin.Height) / 2.0f);
+        }
+
         public void MouseMove(float X, float Y)
         {
             Window Window = this.GetWindow(X, Y);

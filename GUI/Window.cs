@@ -162,6 +162,11 @@ namespace GUI
 
         }
 
+        public void Center(bool CenterX=true,bool CenterY=true)
+        {
+            WindowManager.Center(this, CenterX, CenterY);
+        }
+
         public Window()
         {
             this.Controls = new List<Control>();
