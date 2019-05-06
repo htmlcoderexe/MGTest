@@ -16,10 +16,12 @@ namespace Rog2D.UI
             this.Item = Item;
             this.Width = 256 + this.Margin.X + this.Margin.Width;
             this.Height = 256;
-            ItemSlot s = new ItemSlot(Item);
-            s.CanGrab = false;
-            s.CanPut = false;
-            s.X = 80;
+            ItemSlot s = new ItemSlot(Item)
+            {
+                CanGrab = false,
+                CanPut = false,
+                X = 80
+            };
             GUI.Controls.RichTextDisplay t = new GUI.Controls.RichTextDisplay(256, 128, WM);
             t.SetText(Item.GetDescription());
             t.Y = 84;

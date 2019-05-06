@@ -83,17 +83,23 @@ namespace Rog2D.UI
                 {
                     int i = y * Width + x;
                     Item item = Inventory.Items[i];
-                    ItemSlot s = new ItemSlot(item);
-                    s.X = x * slotwidth;
-                    s.Y = y * slotwidth;
-                    //*
-                    s.CanGrab = false;
-                    s.CanPut = false;
+                    ItemSlot s = new ItemSlot(item)
+                    {
+                        X = x * slotwidth,
+                        Y = y * slotwidth,
+                        //*
+                        CanGrab = false,
+                        CanPut = false
+                    };
 
                     //*/
                     //s.BeforeItemChanged += new ItemSlot.ItemEventHandler((sender, e) => { if(((e as ItemSlot.ItemEventArgs).Item as GameObjects.Item) ==null) e.Cancel=true; });
-                    s.ItemOut += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = null; });
-                    s.ItemIn += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = (e as ItemSlot.ItemEventArgs).Item; });
+                    // s.ItemOut += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = null; });
+                    //s.ItemIn += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = (e as ItemSlot.ItemEventArgs).Item; });
+                    s.ItemInspected+=new ItemSlot.ItemEventHandler((sender, e)=>{
+                        ItemWindow w = new ItemWindow(this.WM, s.Item);
+                        WM.Add(w);
+                    });
                     this.AddControl(s);
                 }
         }

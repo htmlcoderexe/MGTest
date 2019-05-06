@@ -23,6 +23,7 @@ namespace Rog2D.UI
         public event ItemEventHandler ItemOut;
         public event ItemEventHandler ItemIn;
         public event ItemEventHandler BeforeItemChanged;
+        public event ItemEventHandler ItemInspected;
         public ItemSlot(GameObjects.Item Item)
         {
             this.Item = Item;
@@ -42,14 +43,13 @@ namespace Rog2D.UI
                 Item.Render(X + 8, Y + 8, device, Renderer,4);
             base.Render(device, Renderer, X, Y);
         }
-        public override void Click(float X, float Y)
+        public override void Click(float X, float Y)  //bad bad bad bad bad!! this is an overrideable method instead of the intended event.
         {
             if (!CanGrab && !CanPut) //nothing to do here
             {
                 if (this.Item != null)
                 {
-                    ItemWindow w = new ItemWindow(this.WM, this.Item );
-                    WM.Add(w);
+                    ItemInspected?.Invoke(this, new ItemEventArgs(this.Item));
                 }
                 return;
             }
