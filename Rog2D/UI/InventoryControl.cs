@@ -97,8 +97,8 @@ namespace Rog2D.UI
                     // s.ItemOut += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = null; });
                     //s.ItemIn += new ItemSlot.ItemEventHandler((sender, e) => { Inventory.Items[i] = (e as ItemSlot.ItemEventArgs).Item; });
                     s.ItemInspected+=new ItemSlot.ItemEventHandler((sender, e)=>{
-                        ItemWindow w = new ItemWindow(this.WM, s.Item);
-                        WM.Add(w);
+                        ItemWindow w = new ItemWindow(this.WM, s.Item,this.Parent as InventoryWindow);
+                        this.WM.Add(w);
                     });
                     this.AddControl(s);
                 }

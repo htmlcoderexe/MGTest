@@ -17,11 +17,11 @@ namespace Rog2D.Scenes
 
         public MouseState pms { get; set; }
 
-        public GameObjects.Map Map;
+        public static GameObjects.Map Map;
 
         private bool IsPlayerTurn { get; set; }
 
-        private Player Player;
+        public static Player Player;
 
         private GraphicsDevice Device;
 
