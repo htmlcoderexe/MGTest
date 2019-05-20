@@ -50,21 +50,23 @@ namespace GameObjects.MapObjects
                 MapObject bump = Map.ItemAt(X, Y);
                 if (bump != null)
                 {
-                    Monster m = bump as Monster;
-                    if (m != null)
+                    if (bump is Monster m)
                     {
-                        m.Die();
-                        Player.Message("Player vanquishes " + m.Name + ".");
+                        //#TODO: replace with actual damage/hit code
+                        m.AddStat("HP", -this.CalculateBasicAttack());
+                        if(m.GetStat("HP")<=0)
+                        {
+                            Player.Message("Player vanquishes " + m.Name + ".");
+                            m.IsDead = true;
+                        }
                     }
-                    ItemDrop d = bump as ItemDrop;
-                    if(d!=null)
+                    if (bump is ItemDrop d)
                     {
                         d.IsDead = true;
                         Item i = d.GetItem();
-                        if(!i.Identified)
+                        if (!i.Identified)
                         {
-                            Items.ItemCard card = i as Items.ItemCard;
-                            if(card!=null)
+                            if (i is Items.ItemCard card)
                             {
                                 card.Identified = Items.ItemCard.IdentifiedCards.Contains(card.Effect);
                             }

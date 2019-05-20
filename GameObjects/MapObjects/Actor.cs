@@ -23,9 +23,36 @@ namespace GameObjects.MapObjects
         public Inventory Inventory { get; set; }
         public int Speed;
 
+        private Dictionary<string, float> Stats;
+        public float GetStat(string name)
+        {
+            return Stats.ContainsKey(name) ? Stats[name] : 0.0f;
+        }
+        public void SetStat(string name, float value)
+        {
+            if (!Stats.ContainsKey(name))
+                Stats.Add(name, 0.0f);
+            Stats[name] = value;
+        }
+        public void AddStat(string name, float value)
+        {
+            SetStat(name, GetStat(name) + value);
+        }
+        public void MultiplyStat(string name, float value)
+        {
+            SetStat(name, GetStat(name) * value);
+        }
+
+        public float CalculateBasicAttack()
+        {
+            return 1 + this.GetStat("PAtk");
+        }
+
         public Actor()
         {
             this.Inventory = new Inventory(16);
+            this.Stats = new Dictionary<string, float>();
+            this.SetStat("HP", 20); //seems reasonable
         }
 
         public Point GetNextStep(int X, int Y, Map Map)
