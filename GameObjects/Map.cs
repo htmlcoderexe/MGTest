@@ -150,10 +150,13 @@ namespace GameObjects
         public MapObjects.Player Player;
         public const int spriteWidth=16;
         public static GUI.Renderer Renderer;
+
+        public TimeSystem.SchedulerATB Scheduler;
         public Map(int W, int H)
         {
             this.Tiles = new Tile[W, H];
             this.Objects = new List<MapObject>();
+            this.Scheduler = new TimeSystem.SchedulerATB();
             CardMappings = new Dictionary<int, int>();
             //Suicide King
             CardMappings[1] = 1;
@@ -193,6 +196,19 @@ namespace GameObjects
         public void SetTile(Point Point, Tile Tile)
         {
             SetTile(Point.X, Point.Y, Tile);
+        }
+
+        public void AddObject(MapObject Object)
+        {
+            this.Objects.Add(Object);
+            if (Object is TimeSystem.IActor actor)
+                Scheduler.Add(actor);
+        }
+        public void RemoveObject(MapObject Object)
+        {
+            this.Objects.Remove(Object);
+            if (Object is TimeSystem.IActor actor)
+                Scheduler.Remove(actor);
         }
 
         public bool InRange(int X, int Y)
@@ -252,7 +268,7 @@ namespace GameObjects
             }
             foreach(MapObject d in deadUnits)
             {
-                Objects.Remove(d);
+                RemoveObject(d);
             }
         }
         public void Render(SpriteBatch b, Texture2D t,Texture2D autot, Matrix m,float Scale)

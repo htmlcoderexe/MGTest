@@ -57,7 +57,7 @@ namespace Rog2D.UI
                 itemDrop.X = Scenes.MainGame.Player.X;
                 itemDrop.Y = Scenes.MainGame.Player.Y;
                 itemDrop.ParentMap = Scenes.MainGame.Map;
-                Scenes.MainGame.Map.Objects.Add(itemDrop);
+                Scenes.MainGame.Map.AddObject(itemDrop);
                 this._parentWindow.Reload();
                 this.Close();
             });

@@ -71,6 +71,9 @@ namespace GameObjects.MapObjects
         // all commands go here
         public virtual void RequestUseItem(Item Item)
         {
+            Item.Apply(null);
+            //
+            return;
             GameObjects.Actions.UseItem u = new GameObjects.Actions.UseItem();
             u.Time = Item.UseTime;
             u.Item = Item;
@@ -79,6 +82,10 @@ namespace GameObjects.MapObjects
         }
         public virtual void RequestMove(int X, int Y, Map Map, int speed)
         {
+
+            //
+            Move(X, Y, Map);
+            return;
             Actions.MoveStep m = new Actions.MoveStep();
             m.X = X;
             m.Y = Y;

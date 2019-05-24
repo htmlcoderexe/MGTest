@@ -35,11 +35,19 @@ namespace TimeSystem
                 actor.Readiness += actor.FillRate;
             //Actor with highest value above 1.0 gets selected to act and loses a full action worth of gauge. Specific actions defined by actors can create longer or shorter actions, allowing the actor to act faster after a quick action or later after something slow like casting the kill everyone forever spell.
             actors = actors.OrderByDescending(a => a.Readiness).ToList();
-            IActor aNext = actors.First();
-            if (aNext.Readiness < 1.0f)
-                return false;
-            aNext.Readiness--;
-            aNext.Act();
+            int i = 0;
+            bool nonempty = false;
+            while(i<actors.Count)
+            {
+
+                IActor aNext = actors[i];
+                if (aNext.Readiness < 1.0f)
+                    return nonempty;
+                aNext.Readiness--;
+                aNext.Act();
+                nonempty = true;
+                i++;
+            }
             return true;
         }
     }

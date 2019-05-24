@@ -637,8 +637,10 @@ namespace GameObjects
                 m.Friendliness = Actor.FriendlinessValue.Hostile;
                 m.Icon = Selected + 2;
                 m.Name = Mobs[Selected];
-                m.Speed = RNG.NextDouble() > 0.5 ? 12 : 4;      
-                Map.Objects.Add(m);
+               m.FillRate = RNG.NextDouble() > 0.5 ? 0.9f : 0.4f;
+                // m.Speed = RNG.NextDouble() > 0.5 ? 12 : 4;      
+
+                Map.AddObject(m);
             }
             p = GameObjects.MapGeneratorMesh.PlaceOjects(0, 0, W, H, rekts, 2);
             foreach (Point np in p)
@@ -647,7 +649,7 @@ namespace GameObjects
                 c.X = np.X;
                 c.Y = np.Y;
                 c.ParentMap = Map;
-                Map.Objects.Add(c);
+                Map.AddObject(c);
             }
 
             Map.CardMappings = CreateMappings(Map.CardMappings,31);
@@ -659,7 +661,7 @@ namespace GameObjects
                 c.X = np.X;
                 c.Y = np.Y;
                 c.ParentMap = Map;
-                Map.Objects.Add(c);
+                Map.AddObject(c);
             }
             p = PlaceOjects(0, 0, W, H, rekts, 150, p, true);
             foreach (Point np in p)
@@ -669,7 +671,7 @@ namespace GameObjects
                 c.X = np.X;
                 c.Y = np.Y;
                 c.ParentMap = Map;
-                Map.Objects.Add(c);
+                Map.AddObject(c);
             }
 
 

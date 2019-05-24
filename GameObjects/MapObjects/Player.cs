@@ -12,11 +12,14 @@ namespace GameObjects.MapObjects
 
         public bool IsActive;
 
+        public float Readiness { get; set; }
+        public float FillRate { get; set; }
         public Item Hotkey1Item { get; set; }
 
         public Player() : base()
         {
             this.Icon = 1;
+            this.FillRate = 1;
         }
 
         public override void RequestMove(int X, int Y, Map Map, int speed)

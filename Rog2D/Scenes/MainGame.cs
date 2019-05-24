@@ -206,10 +206,12 @@ namespace Rog2D.Scenes
             //GameObjects.MapGeneratorDigger Mapper = new GameObjects.MapGeneratorDigger(64, 64);
             Map.Renderer = WM.Renderer;
             Map = GameObjects.MapGeneratorMesh.Generate(128, 128, 150, 3, 0.01f);
+            
             //World.Map = Mapper.Generate(100);
             Player.X = Map.PlayerSpawn.X;
             Player.Y = Map.PlayerSpawn.Y;
             Map.Player = Player;
+           
             Player.ParentMap = Map;
             Player.Act();
             foreach (MapObject o in Map.Objects)
@@ -234,6 +236,7 @@ namespace Rog2D.Scenes
            Scroll = pms.ScrollWheelValue;
 
             InitMap();
+            Map.Scheduler.Add(Player);
             Console = new UI.ConsoleWindow(WM);
             Console.Visible = true;
             Console.Title = "Console";
@@ -303,7 +306,7 @@ namespace Rog2D.Scenes
            if(!Player.IsActive ||countactors==0)
             {
                 //do stuff as long as it's not the player's turn
-                while(Volatile.Scheduler.Next()!=-1 && !Player.IsActive)
+                while(!Map.Scheduler.Crank())
                 {
 
                 }

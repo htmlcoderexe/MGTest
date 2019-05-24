@@ -17,6 +17,9 @@ namespace GameObjects.MapObjects
             this.Name = "goblin of doom";
         }
 
+        public float Readiness { get; set; }
+        public float FillRate { get; set; }
+
         public void Act()
         {
             if (this.Target != null)
