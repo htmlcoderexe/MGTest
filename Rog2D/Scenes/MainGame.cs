@@ -205,7 +205,7 @@ namespace Rog2D.Scenes
             Map = new GameObjects.Map(20, 20);
             //GameObjects.MapGeneratorDigger Mapper = new GameObjects.MapGeneratorDigger(64, 64);
             Map.Renderer = WM.Renderer;
-            Map = GameObjects.MapGeneratorMesh.Generate(128, 128, 150, 3, 0.01f);
+            Map = GameObjects.MapGeneratorMesh.Generate(60, 60, 15, 3, 0.01f);
             
             //World.Map = Mapper.Generate(100);
             Player.X = Map.PlayerSpawn.X;
@@ -214,14 +214,13 @@ namespace Rog2D.Scenes
            
             Player.ParentMap = Map;
             Player.Act();
+            Map.Scheduler.Add(Player);
             foreach (MapObject o in Map.Objects)
             {
                 o.Command = Volatile.Scheduler;
-                Monster m = o as Monster;
-                if (m != null)
+                if (o is Monster m)
                     m.Target = Player;
-                TimeSystem.IActor a = o as TimeSystem.IActor;
-                if (a != null)
+                if (o is TimeSystem.IActor a)
                     a.Act();
 
             }
@@ -236,7 +235,6 @@ namespace Rog2D.Scenes
            Scroll = pms.ScrollWheelValue;
 
             InitMap();
-            Map.Scheduler.Add(Player);
             Console = new UI.ConsoleWindow(WM);
             Console.Visible = true;
             Console.Title = "Console";

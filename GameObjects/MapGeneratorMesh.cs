@@ -678,29 +678,39 @@ namespace GameObjects
 
             return Map;
         }
-
+        /// <summary>
+        /// Creates a 1:1 random mapping of numbers in two lists
+        /// </summary>
+        /// <param name="input">Input dictionary, can be pre-filled with existing mappings</param>
+        /// <param name="UpperBound">Highest mapped number</param>
+        /// <param name="LowerBound">Lowest mapped number</param>
+        /// <returns>A dictionary with complete mappings</returns>
         public static Dictionary<int,int> CreateMappings(Dictionary<int,int> input, int UpperBound, int LowerBound=0)
         {
+            //#TODO: take the random as a param
             System.Random RNG = new Random();
-           // Dictionary<int, int> result = new Dictionary<int, int>();
+            //Create two identical lists of numbers
             List<int> mappings = Enumerable.Range(LowerBound, UpperBound - LowerBound + 1).ToList();
             List<int> results = new List<int>(mappings);
+            //remove premade mappings from the lists
             foreach(KeyValuePair<int,int> kvp in input)
             {
                 mappings.Remove(kvp.Key);
-                results.Remove(kvp.Key);
+                results.Remove(kvp.Key); //might have to change this to .Value later
             }
+            //keep going until lists exhausted
             while(results.Count>0)
             {
+                //grab first number 
                 int key = mappings[0];
+                //map to random number from second list
                 int value = results[RNG.Next(0, results.Count)];
+                //record the mapping
                 input[key] = value;
+                //remove the mapped numbers from the lists
                 mappings.Remove(key);
                 results.Remove(value);
             }
-            
-
-
             return input;
         }
 
