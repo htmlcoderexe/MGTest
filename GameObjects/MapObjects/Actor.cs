@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GameObjects.Mechanics;
 
 namespace GameObjects.MapObjects
 {
@@ -21,6 +22,8 @@ namespace GameObjects.MapObjects
         public FriendlinessValue Friendliness { get; set; }
         public bool CanPhase { get; set; }
         public Inventory Inventory { get; set; }
+        public List<StatBonus> StatBonuses { get; private set; }
+
         public int Speed;
 
         private Dictionary<string, float> Stats;
@@ -47,6 +50,13 @@ namespace GameObjects.MapObjects
         {
             return 1 + this.GetStat("PAtk");
         }
+
+        //Wrapping the static to use a single param and attach it to the actor instead
+        public float CalculateStat(string statname)
+        {
+            return StatBonus.CalculateStat(statname, this.StatBonuses);
+        }
+
 
         public Actor()
         {
