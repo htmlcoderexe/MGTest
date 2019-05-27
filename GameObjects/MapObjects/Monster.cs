@@ -30,10 +30,5 @@ namespace GameObjects.MapObjects
             }
         }
 
-        public override void Tick()
-        {
-            
-            base.Tick();
-        }
     }
 }

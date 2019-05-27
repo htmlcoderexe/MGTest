@@ -23,32 +23,14 @@ namespace GameObjects.MapObjects
         public bool CanPhase { get; set; }
         public Inventory Inventory { get; set; }
         public List<StatBonus> StatBonuses { get; private set; }
-
+        public Dictionary<string, float> Bars;
         public int Speed;
 
-        private Dictionary<string, float> Stats;
-        public float GetStat(string name)
-        {
-            return Stats.ContainsKey(name) ? Stats[name] : 0.0f;
-        }
-        public void SetStat(string name, float value)
-        {
-            if (!Stats.ContainsKey(name))
-                Stats.Add(name, 0.0f);
-            Stats[name] = value;
-        }
-        public void AddStat(string name, float value)
-        {
-            SetStat(name, GetStat(name) + value);
-        }
-        public void MultiplyStat(string name, float value)
-        {
-            SetStat(name, GetStat(name) * value);
-        }
+        
 
         public float CalculateBasicAttack()
         {
-            return 1 + this.GetStat("PAtk");
+            return 1 + this.CalculateStat("PAtk");
         }
 
         //Wrapping the static to use a single param and attach it to the actor instead
@@ -57,12 +39,21 @@ namespace GameObjects.MapObjects
             return StatBonus.CalculateStat(statname, this.StatBonuses);
         }
 
+        public void TakeDamage(float Damage)
+        {
+            //#TODO: spawn damage particle
+
+            this.Bars["HP"] -= Damage;
+        }
 
         public Actor()
         {
             this.Inventory = new Inventory(16);
-            this.Stats = new Dictionary<string, float>();
-            this.SetStat("HP", 20); //seems reasonable
+            this.StatBonuses = new List<StatBonus>();
+            this.Bars = new Dictionary<string, float>();
+            this.StatBonuses.Add(new StatBonus() {Type="HPMax", FlatValue=20,Order=StatBonus.StatOrder.Template });
+            this.Bars["HP"] = CalculateStat("HPMax");
+            this.Bars["MP"] = 0;
         }
 
         public Point GetNextStep(int X, int Y, Map Map)
@@ -130,6 +121,18 @@ namespace GameObjects.MapObjects
             this.X += X;
             this.Y += Y;
             return true;
+        }
+
+        public void UpdateBars()
+        {
+            //#TODO: hp/mp regen, status effects, anything that affects these that isn't direct effect
+        }
+
+        public override void Tick()
+        {
+            if (this.Bars["HP"] <= 0)
+                this.Die();
+            base.Tick();
         }
         public virtual void Die()
         {

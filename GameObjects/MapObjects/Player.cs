@@ -20,6 +20,7 @@ namespace GameObjects.MapObjects
         {
             this.Icon = 1;
             this.FillRate = 1;
+            this.StatBonuses.Add(new Mechanics.StatBonus() { Type = "PAtk", FlatValue = 3 });
         }
 
         public override void RequestMove(int X, int Y, Map Map, int speed)
@@ -56,8 +57,8 @@ namespace GameObjects.MapObjects
                     if (bump is Monster m)
                     {
                         //#TODO: replace with actual damage/hit code
-                        m.AddStat("HP", -this.CalculateBasicAttack());
-                        if(m.GetStat("HP")<=0)
+                        m.TakeDamage(this.CalculateBasicAttack());
+                        if(m.Bars["HP"]<=0)
                         {
                             Player.Message("Player vanquishes " + m.Name + ".");
                             m.IsDead = true;
