@@ -67,14 +67,14 @@ namespace Rog2D.Scenes
 
             if (Player.IsActive)
             { 
-            if (k.IsKeyUp(Keys.W) && pks.IsKeyDown(Keys.W))
-                Player.RequestMove(0, -1, Map, 10);
-            if (k.IsKeyUp(Keys.S) && pks.IsKeyDown(Keys.S))
-                Player.RequestMove(0, 1, Map, 10);
-            if (k.IsKeyUp(Keys.A) && pks.IsKeyDown(Keys.A))
-                Player.RequestMove(-1, 0, Map, 10);
-            if (k.IsKeyUp(Keys.D) && pks.IsKeyDown(Keys.D))
-                Player.RequestMove(1, 0, Map, 10);
+                if (k.IsKeyUp(Keys.W) && pks.IsKeyDown(Keys.W))
+                    Player.RequestMove(0, -1, Map, 10);
+                if (k.IsKeyUp(Keys.S) && pks.IsKeyDown(Keys.S))
+                    Player.RequestMove(0, 1, Map, 10);
+                if (k.IsKeyUp(Keys.A) && pks.IsKeyDown(Keys.A))
+                    Player.RequestMove(-1, 0, Map, 10);
+                if (k.IsKeyUp(Keys.D) && pks.IsKeyDown(Keys.D))
+                    Player.RequestMove(1, 0, Map, 10);
                 if (k.IsKeyUp(Keys.E) && pks.IsKeyDown(Keys.E))
                 {
                     if (Player.Hotkey1Item != null)
@@ -94,71 +94,73 @@ namespace Rog2D.Scenes
                     }
                 }
                 if (k.IsKeyDown(Keys.LeftShift))
-                Player.CanPhase = true;
-            if (k.IsKeyUp(Keys.LeftShift))
-                Player.CanPhase = false;
-            if (k.IsKeyUp(Keys.F5) && pks.IsKeyDown(Keys.F5))
-                InitMap();
+                    Player.CanPhase = true;
+                if (k.IsKeyUp(Keys.LeftShift))
+                    Player.CanPhase = false;
+                    if (k.IsKeyUp(Keys.F5) && pks.IsKeyDown(Keys.F5))
+                        InitMap();
+                    if (k.IsKeyUp(Keys.F2) && pks.IsKeyDown(Keys.F2))
+                        Player.Message("HP is " + Player.Bars["HP"] + "/" + Player.CalculateStat("HPMax"));
 
-              Point MousePick= new Point();
-                //this is debug, do not leave in for too long!!
+                    Point MousePick= new Point();
+                    //this is debug, do not leave in for too long!!
 
-                if (Device!=null)
-                {
-
-                    MousePick=MapMousePick(m.X, m.Y, Scale, Device);
-                }
-
-                if(!MouseHandled)
-                {
-                    if(m.LeftButton== ButtonState.Pressed && pms.LeftButton==ButtonState.Released)
+                    if (Device!=null)
                     {
-                        MapObject mo = Map.ItemAt(MousePick.X, MousePick.Y);
-                        string Message = "There is nothing in here.";
-                        if (mo!=null)
-                        {
 
-                            //Player.Message(mo.GetType().ToString());
-                            if (mo is ItemDrop drop)
-                            {
-                                Message = "It is " + drop.GetItem().Name + ". " + drop.GetItem().GetDescription();
-                            }
-                            else if (mo is Monster monster)
-                            {
-                                Message = "It is " + monster.Name + ".";
-                            }
-                            else if (mo is Player player)
-                            {
-                                Message = "It is you! Hi there!";
-                            }
-                        }
-                        else
-                        {
-                            int TileNo = Map.Tiles[MousePick.X, MousePick.Y].Index;
-                            switch(TileNo)
-                            {
-                                case 1://floor
-                                    {
-                                        Message = "It is floor.";
-                                        break;
-                                    }
-                                case 0://wall
-                                    {
-                                        Message = "It is wall.";
-                                        break;
-                                    }
-                                default://floor
-                                    {
-                                        Message = "It is AsdaADSWDAdsd.";
-                                        break;
-                                    }
-                            }
-                        }
-                        Player.Message(Message);
+                        MousePick=MapMousePick(m.X, m.Y, Scale, Device);
                     }
-                }
-             //   WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
-        }
+
+                    if(!MouseHandled)
+                    {
+                        if(m.LeftButton== ButtonState.Pressed && pms.LeftButton==ButtonState.Released)
+                        {
+                            MapObject mo = Map.ItemAt(MousePick.X, MousePick.Y);
+                            string Message = "There is nothing in here.";
+                            if (mo!=null)
+                            {
+
+                                //Player.Message(mo.GetType().ToString());
+                                if (mo is ItemDrop drop)
+                                {
+                                    Message = "It is " + drop.GetItem().Name + ". " + drop.GetItem().GetDescription();
+                                }
+                                else if (mo is Monster monster)
+                                {
+                                    Message = "It is " + monster.Name + ".";
+                                }
+                                else if (mo is Player player)
+                                {
+                                    Message = "It is you! Hi there!";
+                                }
+                            }
+                            else
+                            {
+                                int TileNo = Map.Tiles[MousePick.X, MousePick.Y].Index;
+                                switch(TileNo)
+                                {
+                                    case 1://floor
+                                        {
+                                            Message = "It is floor.";
+                                            break;
+                                        }
+                                    case 0://wall
+                                        {
+                                            Message = "It is wall.";
+                                            break;
+                                        }
+                                    default://floor
+                                        {
+                                            Message = "It is AsdaADSWDAdsd.";
+                                            break;
+                                        }
+                                }
+                            }
+                            Player.Message(Message);
+                        }
+                    }
+                 //   WM.HandleMouse(m, (float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
+            }
             pks = k;
             pms = m;
 
@@ -202,7 +204,11 @@ namespace Rog2D.Scenes
         }
         public void InitMap()
         {
-            Map = new GameObjects.Map(20, 20);
+            Player = new Player();
+            Player.Command = Volatile.Scheduler;
+            pms = Mouse.GetState();
+            Scroll = pms.ScrollWheelValue;
+           // Map = new GameObjects.Map(20, 20);
             //GameObjects.MapGeneratorDigger Mapper = new GameObjects.MapGeneratorDigger(64, 64);
             Map.Renderer = WM.Renderer;
             Map = GameObjects.MapGeneratorMesh.Generate(60, 60, 15, 3, 0.01f);
@@ -228,11 +234,8 @@ namespace Rog2D.Scenes
 
         public void Init()
         {
-           Map = new GameObjects.Map(16, 10);
-           Player = new Player();
-            Player.Command = Volatile.Scheduler;
-            pms = Mouse.GetState();
-           Scroll = pms.ScrollWheelValue;
+         //  Map = new GameObjects.Map(16, 10);
+         
 
             InitMap();
             Console = new UI.ConsoleWindow(WM);
@@ -295,7 +298,14 @@ namespace Rog2D.Scenes
 
         public void Update(GameTime gameTime)
         {
-            int countactors = 0;
+            //ticking mostly updates HP counts and checks for weird states
+            Map.Tick();
+            if (Player.IsDead)
+            {
+                Player.Message("u died lmao");
+                 InitMap();
+            }
+                int countactors = 0;
             foreach(MapObject o in Map.Objects)
             {
                 if ((o as Monster) != null)

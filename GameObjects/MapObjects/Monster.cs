@@ -26,6 +26,9 @@ namespace GameObjects.MapObjects
             {
                 Point p = GetNextStep(Target.X, Target.Y, ParentMap);
 
+                if (this.X+p.X == Target.X && this.Y+p.Y == Target.Y)
+                    Target.TakeDamage(1);
+
                 RequestMove(p.X, p.Y, ParentMap, this.Speed);
             }
         }

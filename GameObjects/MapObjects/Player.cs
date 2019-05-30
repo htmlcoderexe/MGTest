@@ -35,8 +35,9 @@ namespace GameObjects.MapObjects
         {
             if (!this.IsActive)
                 return;
-            base.RequestUseItem(Item);
             this.IsActive = false;
+            this.Readiness -= 0.75f;
+            base.RequestUseItem(Item);
         }
 
         public static void Message(string s)
@@ -82,7 +83,6 @@ namespace GameObjects.MapObjects
                     }
                 }
             }
-            Map.Tick();
             
             return f;
         }

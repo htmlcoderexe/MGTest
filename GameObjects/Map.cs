@@ -270,6 +270,7 @@ namespace GameObjects
             {
                 RemoveObject(d);
             }
+            Player.Tick(Ticks);
         }
         public void Render(SpriteBatch b, Texture2D t,Texture2D autot, Matrix m,float Scale)
         {

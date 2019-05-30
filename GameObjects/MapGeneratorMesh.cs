@@ -663,7 +663,7 @@ namespace GameObjects
                 c.ParentMap = Map;
                 Map.AddObject(c);
             }
-            p = PlaceOjects(0, 0, W, H, rekts, 150, p, true);
+            p = PlaceOjects(0, 0, W, H, rekts, 6, p, true);
             foreach (Point np in p)
             {
                 
