@@ -18,14 +18,14 @@ namespace GameObjects
         public bool IsDead { get; set; }
         public string Name="entity";
         public const float spriteWidth = 16;
-        public virtual void Tick()
+        public virtual void Tick(float dT)
         {
            
         }
         public void Tick(int Ticks)
         {
             for (int i = 0; i < Ticks; i++)
-                this.Tick();
+                this.Tick(1.0f);
         }
 
         public virtual void Render(SpriteBatch b, Texture2D t, float Xoffset,float Yoffset, float Scale)

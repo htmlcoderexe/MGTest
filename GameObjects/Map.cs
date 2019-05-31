@@ -147,6 +147,7 @@ namespace GameObjects
 
         public Tile[,] Tiles;
         public List<MapObject> Objects;
+        public List<MapObjects.TextParticle> Particles;
         public MapObjects.Player Player;
         public const int spriteWidth=16;
         public static GUI.Renderer Renderer;
@@ -156,6 +157,7 @@ namespace GameObjects
         {
             this.Tiles = new Tile[W, H];
             this.Objects = new List<MapObject>();
+            this.Particles = new List<MapObjects.TextParticle>();
             this.Scheduler = new TimeSystem.SchedulerATB();
             CardMappings = new Dictionary<int, int>();
             //Suicide King
@@ -252,7 +254,7 @@ namespace GameObjects
         {
             this.Tick(1);
         }
-        public void Tick(int Ticks)
+        public void Tick(float Ticks)
         {
             List<MapObject> deadUnits = new List<MapObject>();
             foreach (MapObject o in this.Objects)
@@ -270,6 +272,24 @@ namespace GameObjects
             {
                 RemoveObject(d);
             }
+
+            deadUnits.Clear();
+            foreach (MapObject o in this.Particles)
+            {
+                if (o.IsDead)
+                {
+                    deadUnits.Add(o);
+                }
+                else
+                {
+                    o.Tick(Ticks);
+                }
+            }
+            foreach (MapObjects.TextParticle d in deadUnits)
+            {
+                Particles.Remove(d);
+            }
+
             Player.Tick(Ticks);
         }
         public void Render(SpriteBatch b, Texture2D t,Texture2D autot, Matrix m,float Scale)

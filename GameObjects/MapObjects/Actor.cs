@@ -42,7 +42,8 @@ namespace GameObjects.MapObjects
         public void TakeDamage(float Damage)
         {
             //#TODO: spawn damage particle
-
+            TextParticle p = new TextParticle() { Text = Damage.ToString(), Colour = Color.Red, TimeLeft = 1.0f, V0 = new Vector2(0, -16f),X=this.X,Y=this.Y,Offset=new Vector2(0,-16f) };
+            this.ParentMap.Particles.Add(p);
             this.Bars["HP"] -= Damage;
         }
 
@@ -128,11 +129,11 @@ namespace GameObjects.MapObjects
             //#TODO: hp/mp regen, status effects, anything that affects these that isn't direct effect
         }
 
-        public override void Tick()
+        public override void Tick(float dT)
         {
             if (this.Bars["HP"] <= 0)
                 this.Die();
-            base.Tick();
+            base.Tick(dT);
         }
         public virtual void Die()
         {

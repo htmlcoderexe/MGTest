@@ -269,8 +269,11 @@ namespace Rog2D.Scenes
             {
                 o.Render(batch, Assets.SpriteSheets["sprites1"], X,Y,Scale);
             }
-           Player.Render(batch, Assets.SpriteSheets["sprites1"], X,Y,Scale);
-
+            Player.Render(batch, Assets.SpriteSheets["sprites1"], X,Y,Scale);
+            foreach(GameObjects.MapObjects.TextParticle p in Map.Particles)
+            {
+                p.Render(batch, Assets.SpriteSheets["sprites1"], X, Y, Scale);
+            }
             WM.Render(device);
             /*
             Rectangle chatwin = new Rectangle(16, device.PresentationParameters.Bounds.Height - 256, 320, 240);
@@ -298,8 +301,9 @@ namespace Rog2D.Scenes
 
         public void Update(GameTime gameTime)
         {
+            float dT = (float)gameTime.ElapsedGameTime.Milliseconds / 1000f;
             //ticking mostly updates HP counts and checks for weird states
-            Map.Tick();
+            Map.Tick(dT);
             if (Player.IsDead)
             {
                 Player.Message("u died lmao");
@@ -320,7 +324,7 @@ namespace Rog2D.Scenes
                 }
                // Player.Message("Turn #" + Volatile.Scheduler.GetTime());
             }
-            WM.Update((float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
+            WM.Update(dT);
         }
     }
 }
