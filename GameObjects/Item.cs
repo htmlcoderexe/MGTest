@@ -19,7 +19,7 @@ namespace GameObjects
         {
             this.UseTime = 25;
         }
-        public virtual bool Apply(MapObjects.Actor Target)
+        public virtual bool Apply(MapObjects.Actor Source, MapObjects.Actor Target)
         {
             Player.Message("This item does absolutely nothing.");
             return false;

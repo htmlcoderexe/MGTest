@@ -20,7 +20,7 @@ namespace GameObjects.Actions
 
         public bool Fire()
         {
-            return Item.Apply(Target);
+            return false;// Item.Apply(Target);
         }
     }
 }

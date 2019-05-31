@@ -25,7 +25,7 @@ namespace GameObjects.Items
                 this.Identified = true;
         }
 
-        public override bool Apply(Actor Target)
+        public override bool Apply(Actor Source, Actor Target)
         {
             Player.Message(this.GetDescription());
             if (!Identified)

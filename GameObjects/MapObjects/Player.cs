@@ -15,7 +15,8 @@ namespace GameObjects.MapObjects
         public float Readiness { get; set; }
         public float FillRate { get; set; }
         public Item Hotkey1Item { get; set; }
-
+        public Action<Actor,Microsoft.Xna.Framework.Point> AimedAction;
+        
         public Player() : base()
         {
             this.Icon = 1;

@@ -36,7 +36,7 @@ namespace Rog2D.UI
                 Height = 32,
                 Y = 84 + 128
             };
-            b.Clicked += new GUI.Controls.Button.ClickHandler((object o, System.EventArgs e) => { this.Item.Apply(null); this._parentWindow.Reload(); this.Close(); });
+            b.Clicked += new GUI.Controls.Button.ClickHandler((object o, System.EventArgs e) => { this.Item.Apply(Scenes.MainGame.Player,null); this._parentWindow.Reload(); this.Close(); });
             this.AddControl(b);
             b = new GUI.Controls.Button("Toss")
             {

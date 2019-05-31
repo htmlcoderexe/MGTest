@@ -52,10 +52,16 @@ namespace GameObjects.Items
             Renderer.RenderIconEx(device, X, Y, this.Component3 + 96,Scale);
             Renderer.SetColour(Color.Gray);
         }
-        public override bool Apply(Actor Target)
+        public override bool Apply(Actor Source,Actor Target)
         {
-
-            return base.Apply(Target);
+            if (Source is Player p)
+                p.AimedAction = Zap;
+            return base.Apply(Source, Target);
+        }
+        void Zap(Actor Source,Point Target)
+        {
+            if (Source.ParentMap.ItemAt(Target.X, Target.Y) is Actor a)
+                a.TakeDamage(13);
         }
     }
 }

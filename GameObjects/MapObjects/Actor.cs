@@ -74,7 +74,7 @@ namespace GameObjects.MapObjects
         // all commands go here
         public virtual void RequestUseItem(Item Item)
         {
-            Item.Apply(null);
+            Item.Apply(this,null);
             //
             return;
             GameObjects.Actions.UseItem u = new GameObjects.Actions.UseItem();

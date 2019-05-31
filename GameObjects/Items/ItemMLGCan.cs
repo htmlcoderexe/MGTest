@@ -15,7 +15,7 @@ namespace GameObjects.Items
             this.Name = "can of MLG";
             
         }
-        public override bool Apply(Actor Target)
+        public override bool Apply(Actor Source, Actor Target)
         {
             Player.Message("Faint airhorn sounds can be heard.");
             return false;
