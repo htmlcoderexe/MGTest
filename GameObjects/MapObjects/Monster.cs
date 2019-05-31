@@ -22,6 +22,8 @@ namespace GameObjects.MapObjects
 
         public void Act()
         {
+            if (this.IsDead)
+                return;
             if (this.Target != null)
             {
                 Point p = GetNextStep(Target.X, Target.Y, ParentMap);

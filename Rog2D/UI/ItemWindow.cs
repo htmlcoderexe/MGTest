@@ -16,6 +16,7 @@ namespace Rog2D.UI
             this.Item = Item;
             this.Width = 256 + this.Margin.X + this.Margin.Width;
             this.Height = 256;
+            this.Title = Item.Name;
             this._parentWindow = ParentWindow;
             ItemSlot s = new ItemSlot(Item)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameObjects.MapObjects;
 using GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -50,6 +51,11 @@ namespace GameObjects.Items
             Renderer.SetColour(this.Component3Color);
             Renderer.RenderIconEx(device, X, Y, this.Component3 + 96,Scale);
             Renderer.SetColour(Color.Gray);
+        }
+        public override bool Apply(Actor Target)
+        {
+
+            return base.Apply(Target);
         }
     }
 }
