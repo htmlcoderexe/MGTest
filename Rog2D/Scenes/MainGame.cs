@@ -308,13 +308,15 @@ namespace Rog2D.Scenes
            
             float dT = (float)gameTime.ElapsedGameTime.Milliseconds / 1000f;
             WM.Update(dT);
-            Map.Tick(dT);
-
+            Map.Tick(dT); 
             if (Map.AnimationActionFreeze > 0)
             {
                 Map.AnimationActionFreeze -= dT;
                 return;
             }
+            //none of the rest really apply if the player is actively choosing an action
+            if (Player.IsActive)
+                return;
             //if there are any enqueued actions
             if(temp.Count>0)
             {
@@ -322,6 +324,8 @@ namespace Rog2D.Scenes
                 {
                     TimeSystem.IActor a = temp.Dequeue();
                     a.Act();
+                    if (a == Player)
+                        return;
                 }
             }
             else
@@ -343,7 +347,7 @@ namespace Rog2D.Scenes
                     countactors++;
             }
 
-           if(!Player.IsActive)
+           //if(!Player.IsActive)
             {
                 //do stuff as long as it's not the player's turn
                 //crank until player's turn comes up
@@ -363,11 +367,12 @@ namespace Rog2D.Scenes
                     if (a == Player)
                         break;
                 }
+                //Sequence MAY still contain actors moving AFTER the player
                 //Player.Act();
                 //a MUST be equal to player
                // Player.Message("Turn #" + Volatile.Scheduler.GetTime());
             }
-           else
+           //else
             {
                 //player is active, replay all queue acts and let player do stuff
             }
