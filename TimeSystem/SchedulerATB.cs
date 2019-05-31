@@ -46,7 +46,7 @@ namespace TimeSystem
                 if (aNext.Readiness < 1.0f)
                     return nonempty;
                 aNext.Readiness--;
-                aNext.Act();
+                Sequence.Enqueue(aNext);
                 nonempty = true;
                 i++;
             }

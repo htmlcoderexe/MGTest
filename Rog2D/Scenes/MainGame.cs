@@ -35,6 +35,8 @@ namespace Rog2D.Scenes
 
         public UI.InventoryWindow InWin;
 
+        Queue<TimeSystem.IActor> temp;
+
         public void ScreenResized(GraphicsDevice device)
         {
             int ScreenWidth = device.PresentationParameters.BackBufferWidth;
@@ -235,9 +237,10 @@ namespace Rog2D.Scenes
 
         public void Init()
         {
-         //  Map = new GameObjects.Map(16, 10);
-         
+            //  Map = new GameObjects.Map(16, 10);
 
+
+            temp = new Queue<TimeSystem.IActor>();
             InitMap();
             Console = new UI.ConsoleWindow(WM);
             Console.Visible = true;
@@ -312,6 +315,21 @@ namespace Rog2D.Scenes
                 Map.AnimationActionFreeze -= dT;
                 return;
             }
+            //if there are any enqueued actions
+            if(temp.Count>0)
+            {
+                while (Map.AnimationActionFreeze <= 0 && temp.Count >0)
+                {
+                    TimeSystem.IActor a = temp.Dequeue();
+                    a.Act();
+                }
+            }
+            else
+            {
+
+                //Player.Act();
+                
+            }
                 //ticking mostly updates HP counts and checks for weird states
              if (Player.IsDead)
             {
@@ -324,14 +342,29 @@ namespace Rog2D.Scenes
                 if ((o as Monster) != null)
                     countactors++;
             }
+
            if(!Player.IsActive)
             {
                 //do stuff as long as it's not the player's turn
-                while(!Map.Scheduler.Crank())
+                //crank until player's turn comes up
+                while(!Map.Scheduler.Sequence.Contains(Player))
                 {
+                    Map.Scheduler.Crank();
 
-                    
+
+
                 }
+                //by now Sequence MUST contain player
+                TimeSystem.IActor a;
+                while(Map.Scheduler.Sequence.Count>0)
+                {
+                    a = Map.Scheduler.Sequence.Dequeue();
+                    temp.Enqueue(a);
+                    if (a == Player)
+                        break;
+                }
+                //Player.Act();
+                //a MUST be equal to player
                // Player.Message("Turn #" + Volatile.Scheduler.GetTime());
             }
            else
