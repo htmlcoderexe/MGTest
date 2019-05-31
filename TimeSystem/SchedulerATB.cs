@@ -9,9 +9,11 @@ namespace TimeSystem
     public class SchedulerATB
     {
          List<IActor> actors;
+        public Queue<IActor> Sequence;
         public SchedulerATB()
         {
             actors = new List<IActor>();
+            Sequence = new Queue<IActor>();
         }
         public void Add(IActor Actor)
         {
@@ -50,5 +52,7 @@ namespace TimeSystem
             }
             return true;
         }
+
+        
     }
 }

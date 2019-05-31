@@ -19,10 +19,10 @@ namespace GameObjects.MapObjects
 
         public override void Render(SpriteBatch b, Texture2D t, float Xoffset, float Yoffset, float Scale)
         {
-            int rX = (int)(Offset.X+Xoffset + this.X * Map.spriteWidth * Scale);
+            int rX = (int)(Offset.X+Xoffset + (this.X+0.4f) * Map.spriteWidth * Scale);
             int rY = (int)(Offset.Y+Yoffset + this.Y * Map.spriteWidth * Scale);
             b.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-            b.DrawString(Map.Renderer.UIFont, this.Text, new Vector2(rX, rY), this.Colour);
+            b.DrawString(Map.Renderer.UIFont, this.Text, new Vector2(rX, rY), this.Colour, 0, new Vector2(0,0), Scale*0.5f, SpriteEffects.None, 0.0f);
             b.End();
             //base.Render(b, t, Xoffset, Yoffset, Scale);
         }

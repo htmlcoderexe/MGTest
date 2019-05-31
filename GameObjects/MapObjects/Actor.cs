@@ -42,8 +42,9 @@ namespace GameObjects.MapObjects
         public void TakeDamage(float Damage)
         {
             //#TODO: spawn damage particle
-            TextParticle p = new TextParticle() { Text = Damage.ToString(), Colour = Color.Red, TimeLeft = 1.0f, V0 = new Vector2(0, -16f),X=this.X,Y=this.Y,Offset=new Vector2(0,-16f) };
+            TextParticle p = new TextParticle() { Text = Damage.ToString(), Colour = Color.Red, TimeLeft = 0.5f, V0 = new Vector2(0, -16f),X=this.X,Y=this.Y,Offset=new Vector2(0,-32f) };
             this.ParentMap.Particles.Add(p);
+            ParentMap.AnimationActionFreeze += 0.5f;
             this.Bars["HP"] -= Damage;
         }
 

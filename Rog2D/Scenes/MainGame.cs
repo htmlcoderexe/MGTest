@@ -48,7 +48,8 @@ namespace Rog2D.Scenes
 
         public void HandleInput(GameTime gameTime)
         {
-
+            if (Map.AnimationActionFreeze > 0)
+                return;
             while(Volatile.MessageLog.Count>0)
             {
                 string msg = Volatile.MessageLog.Pop();
@@ -301,10 +302,18 @@ namespace Rog2D.Scenes
 
         public void Update(GameTime gameTime)
         {
+           
             float dT = (float)gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            //ticking mostly updates HP counts and checks for weird states
+            WM.Update(dT);
             Map.Tick(dT);
-            if (Player.IsDead)
+
+            if (Map.AnimationActionFreeze > 0)
+            {
+                Map.AnimationActionFreeze -= dT;
+                return;
+            }
+                //ticking mostly updates HP counts and checks for weird states
+             if (Player.IsDead)
             {
                 Player.Message("u died lmao");
                  InitMap();
@@ -315,16 +324,20 @@ namespace Rog2D.Scenes
                 if ((o as Monster) != null)
                     countactors++;
             }
-           if(!Player.IsActive ||countactors==0)
+           if(!Player.IsActive)
             {
                 //do stuff as long as it's not the player's turn
                 while(!Map.Scheduler.Crank())
                 {
 
+                    
                 }
                // Player.Message("Turn #" + Volatile.Scheduler.GetTime());
             }
-            WM.Update(dT);
+           else
+            {
+                //player is active, replay all queue acts and let player do stuff
+            }
         }
     }
 }

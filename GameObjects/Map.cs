@@ -153,6 +153,9 @@ namespace GameObjects
         public static GUI.Renderer Renderer;
 
         public TimeSystem.SchedulerATB Scheduler;
+
+        public float AnimationActionFreeze;
+
         public Map(int W, int H)
         {
             this.Tiles = new Tile[W, H];
