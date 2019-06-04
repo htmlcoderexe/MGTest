@@ -62,6 +62,13 @@ namespace GameObjects.Items
         {
             if (Source.ParentMap.ItemAt(Target.X, Target.Y) is Actor a)
                 a.TakeDamage(13);
+            GameObjects.MapObjects.Particles.ParticleBeam beam = new MapObjects.Particles.ParticleBeam();
+            beam.X = Source.X;
+            beam.Y = Source.Y;
+            beam.TargetX = Target.X;
+            beam.TargetY = Target.Y;
+            beam.TimeLeft = 0.5f;
+            Source.ParentMap.Particles.Add(beam);
         }
     }
 }

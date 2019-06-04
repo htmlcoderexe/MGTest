@@ -281,9 +281,9 @@ namespace Rog2D.Scenes
                 o.Render(batch, Assets.SpriteSheets["sprites1"], X,Y,Scale);
             }
             Player.Render(batch, Assets.SpriteSheets["sprites1"], X,Y,Scale);
-            foreach(GameObjects.MapObjects.TextParticle p in Map.Particles)
+            foreach(GameObjects.MapObjects.Particle p in Map.Particles)
             {
-                p.Render(batch, Assets.SpriteSheets["sprites1"], X, Y, Scale);
+                p.Render(batch, Assets.SpriteSheets["particles"], X, Y, Scale);
             }
             WM.Render(device);
             /*

@@ -17,6 +17,7 @@ namespace GameObjects.Items
         }
         public override bool Apply(Actor Source, Actor Target)
         {
+            Source.Bars["HP"] = Source.CalculateStat("HPMax") * 2;
             Player.Message("Faint airhorn sounds can be heard.");
             return false;
         }

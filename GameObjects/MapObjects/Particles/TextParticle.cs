@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameObjects.MapObjects
+namespace GameObjects.MapObjects.Particles
 {
-    public class TextParticle : MapObject
+    public class TextParticle : Particle
     {
-        public float TimeLeft { get; set; }
         public Vector2 V0 {get;set;}
         public Vector2 dV { get; set; }
         public Vector2 Offset { get; set; }
@@ -30,9 +29,6 @@ namespace GameObjects.MapObjects
         {
             V0 += dV*dT;
             this.Offset += V0*dT;
-            this.TimeLeft -= dT;
-            if (this.TimeLeft <= 0)
-                this.IsDead = true;
             base.Tick(dT);
         }
     }

@@ -82,7 +82,8 @@ namespace Rog2D
             Assets.SpriteSheets["items1"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\items.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["GUI"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\GUI.png", System.IO.FileMode.Open));
             Assets.SpriteSheets["test_bus"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\bus.png", System.IO.FileMode.Open));
-            Assets.SpriteSheets["autotile1"]= Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\autotile.png", System.IO.FileMode.Open));
+            Assets.SpriteSheets["autotile1"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\autotile.png", System.IO.FileMode.Open));
+            Assets.SpriteSheets["particles"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\particles.png", System.IO.FileMode.Open));
             Assets.Fonts["console"] = Content.Load<SpriteFont>("Play");
             Assets.Shaders["GUI"] = Content.Load<Effect>("GUI");
             GUI.Renderer r = new GUI.Renderer(GraphicsDevice)
