@@ -281,10 +281,12 @@ namespace Rog2D.Scenes
                 o.Render(batch, Assets.SpriteSheets["sprites1"], X,Y,Scale);
             }
             Player.Render(batch, Assets.SpriteSheets["sprites1"], X,Y,Scale);
-            foreach(GameObjects.MapObjects.Particle p in Map.Particles)
+            batch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, Assets.Shaders["SpriteImproved"]);
+            foreach (GameObjects.MapObjects.Particle p in Map.Particles)
             {
                 p.Render(batch, Assets.SpriteSheets["particles"], X, Y, Scale);
             }
+            batch.End();
             WM.Render(device);
             /*
             Rectangle chatwin = new Rectangle(16, device.PresentationParameters.Bounds.Height - 256, 320, 240);

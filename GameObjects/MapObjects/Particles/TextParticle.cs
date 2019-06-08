@@ -20,9 +20,9 @@ namespace GameObjects.MapObjects.Particles
         {
             int rX = (int)(Offset.X+Xoffset + (this.X+0.4f) * Map.spriteWidth * Scale);
             int rY = (int)(Offset.Y+Yoffset + this.Y * Map.spriteWidth * Scale);
-            b.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            //b.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
             b.DrawString(Map.Renderer.UIFont, this.Text, new Vector2(rX, rY), this.Colour, 0, new Vector2(0,0), Scale*0.5f, SpriteEffects.None, 0.0f);
-            b.End();
+            //b.End();
             //base.Render(b, t, Xoffset, Yoffset, Scale);
         }
         public override void Tick(float dT)

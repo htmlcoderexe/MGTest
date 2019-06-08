@@ -86,6 +86,7 @@ namespace Rog2D
             Assets.SpriteSheets["particles"] = Texture2D.FromStream(GraphicsDevice, new System.IO.FileStream("graphics\\particles.png", System.IO.FileMode.Open));
             Assets.Fonts["console"] = Content.Load<SpriteFont>("Play");
             Assets.Shaders["GUI"] = Content.Load<Effect>("GUI");
+            Assets.Shaders["SpriteImproved"] = Content.Load<Effect>("File");
             GUI.Renderer r = new GUI.Renderer(GraphicsDevice)
             {
                 WindowSkin = Assets.SpriteSheets["GUI"],
@@ -136,7 +137,7 @@ namespace Rog2D
         protected override void Draw(GameTime gameTime)
         {
             CurrentScene.Render(gameTime, GraphicsDevice, spriteBatch);
-
+           // BusDemo();
             base.Draw(gameTime);
         }
 
@@ -161,7 +162,7 @@ namespace Rog2D
             };
             Vector2 offset = new Vector2(320, 100);
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, Assets.Shaders["GUI"]);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, Assets.Shaders["SpriteImproved"]);
             for (int i = 0; i < Rainbow.Length; i++)
             {
 

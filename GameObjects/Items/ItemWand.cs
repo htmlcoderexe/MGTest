@@ -20,7 +20,7 @@ namespace GameObjects.Items
         public Color Component3Color { get; set; }
         public Color[] WandColours = new Color[]
         {
-            Color.Red,Color.Blue,Color.Beige,Color.CornflowerBlue,Color.Gold,Color.Silver,Color.Lime,Color.Green
+            Color.Red,Color.Blue,Color.Beige,Color.CornflowerBlue,Color.Gold,Color.Silver,Color.Lime,Color.Green,Color.Magenta
         };
         string[] WandShapeNames = new string[]
         {
@@ -28,18 +28,19 @@ namespace GameObjects.Items
         };
         string[] WandColourNames = new string[]
         {
-            "red", "blue", "ivory", "sky blue", "golden", "silver", "lime", "green"
+            "red", "blue", "ivory", "sky blue", "golden", "silver", "lime", "green","purple"
         };
         public ItemWand(System.Random RNG)
         {
+            int colourcount = WandColours.Count();
             int c1 = RNG.Next(0, 4);
             this.Component1 = c1;
             this.Component2 = RNG.Next(0, 4);
             this.Component3 = RNG.Next(0, 4);
-            int cc1 = RNG.Next(0, 8);
+            int cc1 = RNG.Next(0, colourcount);
             this.Component1Color = WandColours[cc1];
-            this.Component2Color = WandColours[RNG.Next(0, 8)];
-            this.Component3Color = WandColours[RNG.Next(0, 8)];
+            this.Component2Color = WandColours[RNG.Next(0, colourcount)];
+            this.Component3Color = WandColours[RNG.Next(0, colourcount)];
             this.Name = "Unidentified " + WandShapeNames[c1] + " " + WandColourNames[cc1] + " wand";
         }
         public override void Render(int X, int Y, GraphicsDevice device, Renderer Renderer,float Scale=1.0f)
@@ -68,6 +69,8 @@ namespace GameObjects.Items
             beam.TargetX = Target.X;
             beam.TargetY = Target.Y;
             beam.TimeLeft = 0.5f;
+            beam.Colour = this.Component1Color;
+            beam.Width = 0.5f;
             Source.ParentMap.Particles.Add(beam);
         }
     }
